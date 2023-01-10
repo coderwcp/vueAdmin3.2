@@ -1,8 +1,23 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import { login } from "./api/user";
-login({ username: "admin", password: "123456" }).then(res => {
-	console.log(res);
+// reset style sheet
+import "@/styles/reset.scss";
+// CSS common style sheet
+import "@/styles/common.scss";
+// element plus
+import ElementPlus from "element-plus";
+// element icons
+import * as Icons from "@element-plus/icons-vue";
+// element css
+import "element-plus/dist/index.css";
+// vue Router
+import router from "./router";
+
+const app = createApp(App);
+
+// 注册element Icons组件
+Object.keys(Icons).forEach(key => {
+	app.component(key, Icons[key as keyof typeof Icons]);
 });
 
-createApp(App).mount("#app");
+app.use(router).use(ElementPlus).mount("#app");

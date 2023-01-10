@@ -1,9 +1,9 @@
 import request from "@/api";
-import { LoginParams } from "../interface";
+import { Login } from "../interface";
 
-export function login(data: LoginParams) {
+export function loginApi(data: Login.LoginParams) {
 	return request.post("/login", data);
 }
-export function reguser(params: LoginParams) {
+export function reguserApi(params: Login.LoginParams) {
 	return request.post("/reguser", params);
 }
