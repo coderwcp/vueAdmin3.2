@@ -35,3 +35,5 @@ export const notFoundRouter = {
 	name: "notFound",
 	redirect: { name: "404" }
 };
+
+export const ROUTER_WHITE_LIST: string[] = ["/500"];

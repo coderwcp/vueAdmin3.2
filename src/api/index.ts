@@ -7,10 +7,7 @@ import { ResultData } from "./interface";
 // }
 const config: AxiosRequestConfig = {
 	baseURL: import.meta.env.VITE_BASE_API_URL,
-	timeout: 5000,
-	headers: {
-		"Content-Type": "application/x-www-form-urlencoded"
-	}
+	timeout: 5000
 };
 
 class Request {
