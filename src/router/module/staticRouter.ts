@@ -26,3 +26,12 @@ export const errorRouter: RouteRecordRaw[] = [
 		component: () => import("@/components/Error/404.vue")
 	}
 ];
+
+/**
+ * notFoundRouter(找不到路由)
+ */
+export const notFoundRouter = {
+	path: "/:pathMatch(.*)*",
+	name: "notFound",
+	redirect: { name: "404" }
+};

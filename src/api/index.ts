@@ -1,4 +1,6 @@
+import { GlobalStore } from "@/store";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { ResultData } from "./interface";
 
 // interface MyAxiosRequestConfig extends AxiosRequestConfig {
 // 	headers?: any;
@@ -19,7 +21,8 @@ class Request {
 
 		this.server.interceptors.request.use(
 			(config: AxiosRequestConfig) => {
-				return { ...config };
+				const { token } = GlobalStore();
+				return { ...config, headers: { ...config.headers, Authorization: token } };
 			},
 			(error: AxiosError) => {
 				console.log(error);
@@ -28,7 +31,8 @@ class Request {
 		);
 		this.server.interceptors.response.use(
 			(response: AxiosResponse) => {
-				return response;
+				const { data } = response;
+				return data;
 			},
 			(error: AxiosError) => {
 				console.log(error);
@@ -37,16 +41,16 @@ class Request {
 		);
 	}
 
-	get<T>(url: string, params?: object): Promise<T> {
+	get<T>(url: string, params?: object): Promise<ResultData<T>> {
 		return this.server.get(url, { params });
 	}
-	post<T>(url: string, data?: object): Promise<T> {
+	post<T>(url: string, data?: object): Promise<ResultData<T>> {
 		return this.server.post(url, data);
 	}
-	put<T>(url: string, params?: object): Promise<T> {
+	put<T>(url: string, params?: object): Promise<ResultData<T>> {
 		return this.server.put(url, params);
 	}
-	delete<T>(url: string, params?: object): Promise<T> {
+	delete<T>(url: string, params?: object): Promise<ResultData<T>> {
 		return this.server.delete(url, { params });
 	}
 }

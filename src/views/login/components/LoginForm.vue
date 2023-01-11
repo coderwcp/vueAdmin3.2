@@ -21,13 +21,16 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="loginForm">
 import { ElForm } from "element-plus";
 import { ref, reactive } from "vue";
 import { Login } from "@/api/interface";
 import { loginApi } from "@/api/user";
 import { useRouter } from "vue-router";
+import { GlobalStore } from "@/store";
+import { initDynamicRouter } from "@/router/module/dynamicRouter";
 const router = useRouter();
+const globalStore = GlobalStore();
 
 // 定义 form
 type FormInstance = InstanceType<typeof ElForm>;
@@ -53,8 +56,12 @@ const login = (fromEl: FormInstance | undefined) => {
 		loading.value = true;
 		try {
 			// 调用登录接口
-			const res = await loginApi(loginForm);
-			console.log(res);
+			const {
+				data: { access_token }
+			} = await loginApi(loginForm);
+			globalStore.setToken(access_token);
+
+			await initDynamicRouter();
 
 			router.push("/home/index");
 		} catch (error) {}
