@@ -1,0 +1,49 @@
+<template>
+	<el-container class="layout">
+		<el-aside>
+			<div class="menu" :style="{ width: true ? '210px' : '65px' }">
+				<div class="logo flx-center">
+					<img src="@/assets/images/logo.svg" alt="logo" />
+					<span>Admin</span>
+				</div>
+				<el-scrollbar>
+					<el-menu
+						:default-active="activeMenu"
+						:router="false"
+						:collapse="isCollapse"
+						:collapse-transition="false"
+						:unique-opened="true"
+						background-color="#191a20"
+						text-color="#bdbdc0"
+						active-text-color="#ffffff"
+					>
+						<SubMenu :menuList="menuList" />
+					</el-menu>
+				</el-scrollbar>
+			</div>
+		</el-aside>
+		<el-container>
+			<el-header>header</el-header>
+			<div>main</div>
+		</el-container>
+	</el-container>
+</template>
+
+<script setup lang="ts" name="LayoutVertical">
+import { GlobalStore } from "@/store";
+import { AuthStore } from "@/store/module/auth";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import SubMenu from "../components/Menu/SubMenu.vue";
+const globalStore = GlobalStore();
+const authStore = AuthStore();
+const route = useRoute();
+
+const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu : route.path));
+const isCollapse = computed(() => globalStore.themeConfig.isCollapse);
+const menuList = computed(() => authStore.showMenuListGet);
+</script>
+
+<style lang="scss" scoped>
+@import "./index.scss";
+</style>

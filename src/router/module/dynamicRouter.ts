@@ -26,8 +26,9 @@ export const initDynamicRouter = async () => {
 			return Promise.reject("No Permission");
 		}
 
-		authStore.authMenuList.forEach((item: any) => {
-			if (isType(item.component) === "string") {
+		authStore.flatMenuListGet.forEach((item: any) => {
+			item.children && delete item.children;
+			if (item.component && isType(item.component) === "string") {
 				item.component = modules["/src/views" + item.component + ".vue"];
 			}
 			if (item.meta.isFull) {

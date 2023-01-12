@@ -32,7 +32,11 @@ export const GlobalStore = defineStore({
 	// state: 返回对象的函数
 	state: (): GlobalState => ({
 		// token
-		token: ""
+		token: "",
+		themeConfig: {
+			layout: "vertical",
+			isCollapse: false
+		}
 	}),
 	getters: {},
 	actions: {

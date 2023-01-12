@@ -1,6 +1,12 @@
 /* GlobalState */
 export interface GlobalState {
 	token: string;
+	themeConfig: ThemeConfigProps;
+}
+
+export interface ThemeConfigProps {
+	layout: string;
+	isCollapse: boolean;
 }
 
 /* AuthState */

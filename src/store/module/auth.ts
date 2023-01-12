@@ -1,4 +1,5 @@
 import { getMenuListApi } from "@/api/user";
+import { getFlatMenuList, getShowMenuList } from "@/utils";
 import { defineStore } from "pinia";
 import { AuthState } from "../interface";
 
@@ -22,6 +23,9 @@ export const AuthStore = defineStore({
 		}
 	},
 	getters: {
-		authMenuListGet: state => state.authMenuList
+		authMenuListGet: state => state.authMenuList,
+		// 展示 isHide=false
+		showMenuListGet: state => getShowMenuList(state.authMenuList),
+		flatMenuListGet: state => getFlatMenuList(state.authMenuList)
 	}
 });
