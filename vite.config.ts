@@ -18,6 +18,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 				"vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js"
 			}
 		},
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: `@import "@/styles/var.scss";`
+				}
+			}
+		},
 		server: {
 			port: viteEnv.VITE_PORT,
 			open: viteEnv.VITE_OPEN,

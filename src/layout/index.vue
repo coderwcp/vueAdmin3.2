@@ -1,14 +1,16 @@
 <template>
 	<component :is="LayoutComponents[themeConfig.layout]" />
+	<ThemeDrawer />
 </template>
 
-<script setup lang="ts" name="layout">
+<script setup lang="ts" name="Layout">
 import { GlobalStore } from "@/store";
 import { computed } from "vue";
 import LayoutVertical from "./LayoutVertical/index.vue";
 import LayoutClassic from "./LayoutClassic/index.vue";
 import LayoutTransverse from "./LayoutTransverse/index.vue";
 import LayoutColumns from "./LayoutColumns/index.vue";
+import ThemeDrawer from "./components/ThemeDrawer/index.vue";
 
 const LayoutComponents: { [key: string]: any } = {
 	vertical: LayoutVertical,

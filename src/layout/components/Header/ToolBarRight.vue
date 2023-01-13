@@ -2,6 +2,7 @@
 	<div class="tool-bar-ri">
 		<div class="header-icon">
 			<Language />
+			<ThemeSetting />
 		</div>
 		<span class="username">{{ userInfo.nickname || userInfo.username || "admin" }}</span>
 		<Avatar />
@@ -13,6 +14,7 @@ import { GlobalStore } from "@/store";
 import { computed } from "vue";
 import Avatar from "./components/Avatar.vue";
 import Language from "./components/Language.vue";
+import ThemeSetting from "./components/ThemeSetting.vue";
 const globalStore = GlobalStore();
 const userInfo = computed(() => globalStore.userInfo);
 </script>
@@ -27,8 +29,7 @@ const userInfo = computed(() => globalStore.userInfo);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-
-		// width: 230px;
+		width: 60px;
 		margin-right: 22px;
 	}
 	.username {

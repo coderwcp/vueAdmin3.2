@@ -1,25 +1,3 @@
-// import { createPinia, defineStore } from "pinia";
-// import { GlobalState } from "./interface";
-// import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-// import piniaPersistConfig from "@/config/piniaPersist";
-
-// export const GlobalStore = defineStore({
-// 	id: "GlobalState",
-// 	state: (): GlobalState => ({
-// 		token: ""
-// 	}),
-// 	actions: {
-// 		setToken(token: string) {
-// 			this.token = token;
-// 		}
-// 	},
-// 	getters: {},
-// 	persist: piniaPersistConfig("GlobalState")
-// });
-
-// const pinia = createPinia();
-// pinia.use(piniaPluginPersistedstate);
-// export default pinia;
 import { defineStore, createPinia } from "pinia";
 import { GlobalState, ThemeConfigProps } from "./interface";
 import piniaPersistConfig from "@/config/piniaPersist";
