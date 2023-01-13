@@ -6,14 +6,11 @@ import router from "..";
 import { notFoundRouter } from "./staticRouter";
 
 const modules = import.meta.glob("@/views/**/*.vue");
-console.log(modules);
 export const initDynamicRouter = async () => {
 	const globalStore = GlobalStore();
 	const authStore = AuthStore();
 	try {
 		await authStore.getAuthMenuList();
-		console.log(authStore.authMenuListGet);
-
 		if (!authStore.authMenuList.length) {
 			ElNotification({
 				title: "无权限访问",
@@ -29,7 +26,7 @@ export const initDynamicRouter = async () => {
 		authStore.flatMenuListGet.forEach((item: any) => {
 			item.children && delete item.children;
 			if (item.component && isType(item.component) === "string") {
-				item.component = modules["/src/views" + item.component + ".vue"];
+				item.component = modules["/src/views" + item.component + "/index.vue"];
 			}
 			if (item.meta.isFull) {
 				router.addRoute(item);

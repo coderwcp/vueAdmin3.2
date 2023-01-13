@@ -66,7 +66,7 @@ const login = (fromEl: FormInstance | undefined) => {
 
 			await initDynamicRouter();
 
-			router.push("/home/index");
+			router.push("/Home");
 		} catch (error) {}
 	});
 };

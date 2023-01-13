@@ -1,5 +1,5 @@
 <template>
-	<div>MemberList</div>
+	<div>SpotTransactions</div>
 </template>
 
 <script setup lang="ts" name=""></script>
