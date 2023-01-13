@@ -21,7 +21,7 @@
 // pinia.use(piniaPluginPersistedstate);
 // export default pinia;
 import { defineStore, createPinia } from "pinia";
-import { GlobalState } from "./interface";
+import { GlobalState, ThemeConfigProps } from "./interface";
 import piniaPersistConfig from "@/config/piniaPersist";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { Login } from "@/api/interface";
@@ -67,6 +67,9 @@ export const GlobalStore = defineStore({
 		},
 		updateLanguage(language: string) {
 			this.language = language;
+		},
+		setThemeConfig(themeConfig: ThemeConfigProps) {
+			this.themeConfig = themeConfig;
 		}
 	},
 	persist: piniaPersistConfig("GlobalState")
