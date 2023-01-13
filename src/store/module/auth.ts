@@ -1,5 +1,5 @@
 import { getMenuListApi } from "@/api/user";
-import { getFlatMenuList, getShowMenuList } from "@/utils";
+import { getAllBreadcrumbList, getFlatMenuList, getShowMenuList } from "@/utils";
 import { defineStore } from "pinia";
 import { AuthState } from "../interface";
 
@@ -26,6 +26,8 @@ export const AuthStore = defineStore({
 		authMenuListGet: state => state.authMenuList,
 		// 展示 isHide=false
 		showMenuListGet: state => getShowMenuList(state.authMenuList),
-		flatMenuListGet: state => getFlatMenuList(state.authMenuList)
+		flatMenuListGet: state => getFlatMenuList(state.authMenuList),
+		// 所有面包屑导航列表
+		breadcrumbListGet: state => getAllBreadcrumbList(state.authMenuList)
 	}
 });

@@ -11,6 +11,8 @@ export interface GlobalState {
 export interface ThemeConfigProps {
 	layout: string;
 	isCollapse: boolean;
+	breadcrumb: boolean;
+	breadcrumbIcon: boolean;
 }
 
 /* AuthState */
