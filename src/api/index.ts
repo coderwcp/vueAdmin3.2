@@ -25,6 +25,8 @@ class Request {
 			(config: AxiosRequestConfig) => {
 				const { token } = GlobalStore();
 				// 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
+				console.log(config.headers!.noLoading);
+
 				config.headers!.noLoading || showFullScreenLoading();
 				return { ...config, headers: { ...config.headers, Authorization: token } };
 			},
@@ -69,17 +71,17 @@ class Request {
 		);
 	}
 
-	get<T>(url: string, params?: object): Promise<ResultData<T>> {
-		return this.server.get(url, { params });
+	get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+		return this.server.get(url, { params, ..._object });
 	}
-	post<T>(url: string, data?: object): Promise<ResultData<T>> {
-		return this.server.post(url, data);
+	post<T>(url: string, data?: object, _object = {}): Promise<ResultData<T>> {
+		return this.server.post(url, data, _object);
 	}
-	put<T>(url: string, params?: object): Promise<ResultData<T>> {
-		return this.server.put(url, params);
+	put<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+		return this.server.put(url, params, _object);
 	}
-	delete<T>(url: string, params?: object): Promise<ResultData<T>> {
-		return this.server.delete(url, { params });
+	delete<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+		return this.server.delete(url, { params, ..._object });
 	}
 }
 

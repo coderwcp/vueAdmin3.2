@@ -21,5 +21,12 @@ export namespace Login {
 	}
 	export interface ResLogin {
 		access_token: string;
+		user_info: UserInfo;
+	}
+	export interface UserInfo {
+		username: string;
+		nickname: string;
+		email: string;
+		avatar: string | null;
 	}
 }

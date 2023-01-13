@@ -23,7 +23,10 @@
 			</div>
 		</el-aside>
 		<el-container>
-			<el-header>header</el-header>
+			<el-header>
+				<ToolBarLeft />
+				<ToolBarRight />
+			</el-header>
 			<div>main</div>
 		</el-container>
 	</el-container>
@@ -35,6 +38,8 @@ import { AuthStore } from "@/store/module/auth";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import SubMenu from "../components/Menu/SubMenu.vue";
+import ToolBarLeft from "../components/Header/ToolBarLeft.vue";
+import ToolBarRight from "../components/Header/ToolBarRight.vue";
 const globalStore = GlobalStore();
 const authStore = AuthStore();
 const route = useRoute();
@@ -46,4 +51,26 @@ const menuList = computed(() => authStore.showMenuListGet);
 
 <style lang="scss" scoped>
 @import "./index.scss";
+</style>
+
+<style lang="scss">
+.vertical {
+	.el-menu,
+	.el-menu--popup {
+		.el-menu-item {
+			&.is-active {
+				background: #060708;
+				&::before {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					width: 4px;
+					content: "";
+					background: var(--el-color-primary);
+				}
+			}
+		}
+	}
+}
 </style>

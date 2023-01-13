@@ -1,7 +1,23 @@
 <template>
-	<RouterView />
+	<el-config-provider :locale="i18nLocale">
+		<RouterView />
+	</el-config-provider>
 </template>
 
-<script setup lang="ts" name=""></script>
+<script setup lang="ts" name="App">
+import { computed } from "vue";
+import { GlobalStore } from "./store";
+import { getBrowserLang } from "./utils";
+import en from "element-plus/es/locale/lang/en";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+const globalStore = GlobalStore();
+
+// element 语言配置
+const i18nLocale = computed(() => {
+	if (globalStore.language && globalStore.language == "zh") return zhCn;
+	if (globalStore.language == "en") return en;
+	return getBrowserLang() == "zh" ? zhCn : en;
+});
+</script>
 
 <style lang="scss" scoped></style>

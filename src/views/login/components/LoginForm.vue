@@ -57,12 +57,13 @@ const login = (fromEl: FormInstance | undefined) => {
 		try {
 			// 调用登录接口
 			const {
-				data: { access_token }
+				data: { access_token, user_info }
 			} = await loginApi({
 				username: "admin",
 				password: "123456"
 			});
 			globalStore.setToken(access_token);
+			globalStore.setUserInfo(user_info);
 
 			await initDynamicRouter();
 

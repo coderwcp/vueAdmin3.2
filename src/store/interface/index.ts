@@ -1,6 +1,10 @@
+import { Login } from "@/api/interface";
+
 /* GlobalState */
 export interface GlobalState {
 	token: string;
+	userInfo: Login.UserInfo;
+	language: string;
 	themeConfig: ThemeConfigProps;
 }
 
