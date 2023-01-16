@@ -42,6 +42,10 @@ export const TabStore = defineStore({
 			this.tabsMenuList = this.tabsMenuList.filter(item => {
 				return item.path === tabPath || !item.close;
 			});
+		},
+		// Set Tabs
+		setTabs(tabsMenuList: TabsMenuProps[]) {
+			this.tabsMenuList = tabsMenuList;
 		}
 	},
 	persist: piniaPersistConfig("TabState")

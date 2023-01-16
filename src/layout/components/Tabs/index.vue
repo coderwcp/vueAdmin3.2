@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts" name="Tabs">
+import Sortable, { SortableEvent } from "sortablejs";
 import { TabStore } from "@/store/module/tabs";
 import { ref, computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -41,10 +42,19 @@ const tabRemove = (fullPath: string) => {
 	tabStore.removeTabs(fullPath, fullPath === route.fullPath);
 };
 
-onMounted(() => {
-	initTabs();
-});
-
+// 标签拖拽排序
+const tabsDrop = () => {
+	Sortable.create(document.querySelector(".el-tabs__nav") as HTMLElement, {
+		draggable: ".el-tabs__item",
+		animation: 300,
+		onEnd({ newIndex, oldIndex }: SortableEvent) {
+			const tabsList = [...tabStore.tabsMenuList];
+			const currRow = tabsList.splice(oldIndex as number, 1)[0];
+			tabsList.splice(newIndex as number, 0, currRow);
+			tabStore.setTabs(tabsList);
+		}
+	});
+};
 // 初始化需要固定的标签
 const initTabs = () => {
 	authStore.flatMenuListGet.forEach(item => {
@@ -62,6 +72,11 @@ const initTabs = () => {
 		}
 	});
 };
+
+onMounted(() => {
+	tabsDrop();
+	initTabs();
+});
 // 监听路由的变化（防止浏览器后退/前进不变化 tabsMenuValue）
 watch(
 	() => route.fullPath,
