@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts" name="Tabs">
-import Sortable, { SortableEvent } from "sortablejs";
+import Sortable from "sortablejs";
 import { TabStore } from "@/store/module/tabs";
 import { ref, computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -47,7 +47,7 @@ const tabsDrop = () => {
 	Sortable.create(document.querySelector(".el-tabs__nav") as HTMLElement, {
 		draggable: ".el-tabs__item",
 		animation: 300,
-		onEnd({ newIndex, oldIndex }: SortableEvent) {
+		onEnd({ newIndex, oldIndex }: any) {
 			const tabsList = [...tabStore.tabsMenuList];
 			const currRow = tabsList.splice(oldIndex as number, 1)[0];
 			tabsList.splice(newIndex as number, 0, currRow);
@@ -66,8 +66,6 @@ const initTabs = () => {
 				name: item.name,
 				close: !item.meta.isAffix
 			};
-			console.log(tabsParams);
-
 			tabStore.addTabs(tabsParams);
 		}
 	});

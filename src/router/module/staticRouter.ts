@@ -24,6 +24,10 @@ export const errorRouter: RouteRecordRaw[] = [
 	{
 		path: "/404",
 		component: () => import("@/components/Error/404.vue")
+	},
+	{
+		path: "/:catchAll(.*)",
+		component: () => import("@/components/Error/404.vue")
 	}
 ];
 
