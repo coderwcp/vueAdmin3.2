@@ -14,6 +14,8 @@ import ElementPlus from "element-plus";
 import * as Icons from "@element-plus/icons-vue";
 // element css
 import "element-plus/dist/index.css";
+// custom element css
+import "@/styles/element.scss";
 // vue i18n
 import I18n from "@/languages/index";
 // vue Router

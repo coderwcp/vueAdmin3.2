@@ -25,7 +25,13 @@ export const GlobalStore = defineStore({
 			isCollapse: false,
 			breadcrumb: true,
 			// 面包屑导航图标
-			breadcrumbIcon: true
+			breadcrumbIcon: true,
+			// 标签页
+			tabs: true,
+			// 标签页图标
+			tabsIcon: true,
+			// 全屏
+			maximize: false
 		}
 	}),
 	getters: {},

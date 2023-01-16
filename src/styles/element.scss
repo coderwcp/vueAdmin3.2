@@ -1,0 +1,16 @@
+// * 设置 notification/message 层级在 loading 之上
+.el-message,
+.el-notification {
+	z-index: 99999 !important;
+}
+
+// * 当前页面最大化 css
+.main-maximize {
+	.aside-split,
+	.el-aside,
+	.el-header,
+	.el-footer,
+	.tabs-box {
+		display: none !important;
+	}
+}

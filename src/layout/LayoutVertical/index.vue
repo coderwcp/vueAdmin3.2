@@ -27,7 +27,7 @@
 				<ToolBarLeft />
 				<ToolBarRight />
 			</el-header>
-			<div>main</div>
+			<Main />
 		</el-container>
 	</el-container>
 </template>
@@ -40,6 +40,7 @@ import { useRoute } from "vue-router";
 import SubMenu from "../components/Menu/SubMenu.vue";
 import ToolBarLeft from "../components/Header/ToolBarLeft.vue";
 import ToolBarRight from "../components/Header/ToolBarRight.vue";
+import Main from "../components/Main/index.vue";
 const globalStore = GlobalStore();
 const authStore = AuthStore();
 const route = useRoute();
