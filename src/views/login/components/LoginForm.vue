@@ -22,13 +22,14 @@
 </template>
 
 <script setup lang="ts" name="loginForm">
-import { ElForm } from "element-plus";
+import { ElForm, ElNotification } from "element-plus";
 import { ref, reactive } from "vue";
 import { Login } from "@/api/interface";
 import { loginApi } from "@/api/user";
 import { useRouter } from "vue-router";
 import { GlobalStore } from "@/store";
 import { initDynamicRouter } from "@/router/module/dynamicRouter";
+import { getTimeState } from "@/utils";
 const router = useRouter();
 const globalStore = GlobalStore();
 
@@ -68,7 +69,19 @@ const login = (fromEl: FormInstance | undefined) => {
 			await initDynamicRouter();
 
 			router.push("/Home");
-		} catch (error) {}
+
+			ElNotification({
+				title: getTimeState(),
+				message: `欢迎登录 ${user_info.nickname || user_info.username}`,
+				type: "success",
+				duration: 3000
+			});
+		} catch (error) {
+		} finally {
+			setTimeout(() => {
+				loading.value = false;
+			}, 3000);
+		}
 	});
 };
 </script>

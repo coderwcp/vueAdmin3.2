@@ -23,12 +23,14 @@
 
 <script setup lang="ts" name="Avatar">
 import { GlobalStore } from "@/store";
+import { TabStore } from "@/store/module/tabs";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import InfoDialog from "./InfoDialog.vue";
 import PasswordDialog from "./PasswordDialog.vue";
 const globalStore = GlobalStore();
+const tabStore = TabStore();
 const router = useRouter();
 interface DialogExpose {
 	openDialog: () => void;
@@ -49,6 +51,7 @@ const logout = () => {
 		.then(() => {
 			globalStore.setToken("");
 			globalStore.clearUserInfo();
+			tabStore.setTabs([]);
 			router.push("/login");
 			ElMessage.success("退出登录成功！");
 		})

@@ -1,19 +1,31 @@
 <template>
-	<div :class="['breadcrumb-box', !breadcrumbIcon && 'no-icon']"></div>
-	<el-breadcrumb :separator-icon="ArrowRight">
-		<transition-group name="breadcrumb" mode="out-in">
-			<template v-if="breadcrumbList">
-				<el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="item.path">
-					<div class="el-breadcrumb__inner is-link" @click="onBreadcrumbClick(item, index)">
-						<el-icon class="breadcrumb-icon" v-if="item.meta.icon && breadcrumbIcon">
-							<component :is="item.meta.icon"></component>
-						</el-icon>
-						<span class="breadcrumb-title">{{ item.meta.title }}</span>
-					</div>
-				</el-breadcrumb-item></template
-			>
-		</transition-group>
-	</el-breadcrumb>
+	<div :class="['breadcrumb-box', !breadcrumbIcon && 'no-icon']">
+		<el-breadcrumb :separator-icon="ArrowRight">
+			<transition-group name="breadcrumb" mode="out-in">
+				<template v-if="breadcrumbList">
+					<!-- 首页面包屑不要可以直接删除 🙅‍♀️ -->
+					<el-breadcrumb-item :key="'/Home'" :to="{ path: '/Home' }" v-if="breadcrumbList[0].meta.title !== '首页'">
+						<div class="el-breadcrumb__inner is-link">
+							<el-icon class="breadcrumb-icon" v-if="breadcrumbIcon">
+								<HomeFilled />
+							</el-icon>
+							<span class="breadcrumb-title">首页</span>
+						</div>
+					</el-breadcrumb-item>
+					<!-- other -->
+
+					<el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="item.path">
+						<div class="el-breadcrumb__inner is-link" @click="onBreadcrumbClick(item, index)">
+							<el-icon class="breadcrumb-icon" v-if="item.meta.icon && breadcrumbIcon">
+								<component :is="item.meta.icon"></component>
+							</el-icon>
+							<span class="breadcrumb-title">{{ item.meta.title }}</span>
+						</div>
+					</el-breadcrumb-item></template
+				>
+			</transition-group>
+		</el-breadcrumb>
+	</div>
 </template>
 
 <script setup lang="ts" name="Breadcrumb">
