@@ -13,6 +13,20 @@ export interface LoginParams {
 	password: string;
 }
 
+// * 分页响应参数
+export interface ResPage<T> {
+	datalist: T[];
+	pageNum: number;
+	pageSize: number;
+	total: number;
+}
+
+// * 分页请求参数
+export interface ReqPage {
+	pageNum: number;
+	pageSize: number;
+}
+
 // * 登录模块
 export namespace Login {
 	export interface LoginParams {
@@ -28,5 +42,23 @@ export namespace Login {
 		nickname: string;
 		email: string;
 		avatar: string | null;
+	}
+}
+
+// * 会员管理模块
+export namespace User {
+	export interface ReqUserParams extends ReqPage {
+		username: string;
+	}
+
+	export interface ParentAccountProp {
+		account_number: string;
+	}
+
+	export interface ResUserList {
+		id: string;
+		username: string;
+		status: number;
+		parents_account: ParentAccountProp;
 	}
 }

@@ -4,6 +4,7 @@ import { resolve } from "path";
 import { wrapperEnv } from "./src/utils/getEnv";
 import { createHtmlPlugin } from "vite-plugin-html";
 import VueSetupExtend from "vite-plugin-vue-setup-extend";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -49,6 +50,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 					}
 				}
 			}),
+			// * vite 可以使用 jsx/tsx 语法
+			vueJsx(),
 			// * name 可以写在 script 标签上
 			VueSetupExtend()
 		]

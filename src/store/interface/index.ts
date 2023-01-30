@@ -16,6 +16,7 @@ export interface ThemeConfigProps {
 	tabs: boolean;
 	tabsIcon: boolean;
 	maximize: boolean;
+	footer: boolean;
 }
 
 /* AuthState */

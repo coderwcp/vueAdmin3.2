@@ -10,10 +10,14 @@
 			</transition>
 		</router-view>
 	</el-main>
+	<el-footer v-if="themeConfig.footer">
+		<Footer />
+	</el-footer>
 </template>
 
 <script setup lang="ts" name="Main">
 import Tabs from "../Tabs/index.vue";
+import Footer from "../Footer/index.vue";
 import Maximize from "./components/Maximize.vue";
 import { GlobalStore } from "@/store";
 import { computed, ref, provide } from "vue";

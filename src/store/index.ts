@@ -31,7 +31,8 @@ export const GlobalStore = defineStore({
 			// 标签页图标
 			tabsIcon: true,
 			// 全屏
-			maximize: false
+			maximize: false,
+			footer: true
 		}
 	}),
 	getters: {},

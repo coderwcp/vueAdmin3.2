@@ -40,10 +40,8 @@ const tabStore = TabStore();
 const refreshCurrentPage: Function = inject("refresh") as Function;
 const refresh = () => {
 	setTimeout(() => {
-		console.log("setTimeout");
 		refreshCurrentPage(false);
 		nextTick(() => {
-			console.log("nextTick");
 			refreshCurrentPage(true);
 		});
 	}, 0);

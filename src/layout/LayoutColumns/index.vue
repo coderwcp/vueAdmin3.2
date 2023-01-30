@@ -93,7 +93,6 @@ const changeSubMenu = (item: Menu.MenuOptions) => {
 	subMenu.value = [];
 	router.push(item.path);
 };
-console.log(changeSubMenu);
 </script>
 
 <style scoped lang="scss">
