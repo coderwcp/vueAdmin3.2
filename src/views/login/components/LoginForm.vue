@@ -59,10 +59,7 @@ const login = (fromEl: FormInstance | undefined) => {
 			// 调用登录接口
 			const {
 				data: { access_token, user_info }
-			} = await loginApi({
-				username: "admin",
-				password: "123456"
-			});
+			} = await loginApi(loginForm);
 			globalStore.setToken(access_token);
 			globalStore.setUserInfo(user_info);
 

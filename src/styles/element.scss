@@ -72,7 +72,7 @@
 			float: right;
 		}
 		.el-button {
-			margin-bottom: 15px;
+			margin-bottom: 21px;
 		}
 	}
 
@@ -92,7 +92,7 @@
 			background: var(--el-fill-color-light);
 		}
 		.el-table__row {
-			height: 45px;
+			height: 50px;
 			font-size: 14px;
 		}
 
@@ -125,5 +125,6 @@
 		display: flex;
 		justify-content: flex-end;
 		margin-top: 20px;
+		margin-bottom: 15px;
 	}
 }

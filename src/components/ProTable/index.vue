@@ -29,6 +29,7 @@
 			v-bind="$attrs"
 			:data="tableData"
 			:border="border"
+			:stripe="stripe"
 			:row-key="getRowKeys"
 			@selection-change="selectionChange"
 		>
@@ -105,6 +106,7 @@ interface ProTableProps extends Partial<Omit<TableProps<any>, "data">> {
 	pagination?: boolean; // 是否需要分页组件，默认true
 	initParam?: any; // 初始化参数，默认{}
 	border?: boolean; // 是否带有纵向边框，默认true
+	stripe?: boolean; // 是否为斑马纹，默认true
 	toolButton?: boolean; // 是否显示表格功能按钮
 	selectId?: string; // 当表格数据多选时，所指定的id
 	searchCol?: number | Record<BreakPoint, number>; // 表格搜索项，每列占比配置，默认{ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }
@@ -122,6 +124,7 @@ const props = withDefaults(defineProps<ProTableProps>(), {
 	pagination: true,
 	initParam: {},
 	border: true,
+	stripe: true,
 	toolButton: true,
 	selectId: "id",
 	searchCol: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 })
