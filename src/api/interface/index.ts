@@ -62,3 +62,10 @@ export namespace User {
 		parents_account: ParentAccountProp;
 	}
 }
+
+// * 文件上传模块
+export namespace Upload {
+	export interface ResFileUrl {
+		fileUrl: string;
+	}
+}
