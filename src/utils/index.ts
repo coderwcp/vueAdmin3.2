@@ -144,3 +144,25 @@ export function handleProp(prop: string) {
 	if (propArr.length == 1) return prop;
 	return propArr[propArr.length - 1];
 }
+
+/**
+ * @description 正则验证
+ * @param {String} val 当前 验证字符串
+ * @param {String} type 验证类型 0 是否纯数字，1 邮箱验证
+ * @return boolean
+ * */
+
+export function regularVerify(val: string, type: 0 | 1) {
+	let reg;
+	switch (type) {
+		case 0:
+			reg = /^[0-9]*$/;
+			break;
+		case 1:
+			reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+			break;
+		default:
+			break;
+	}
+	return reg?.test(val);
+}

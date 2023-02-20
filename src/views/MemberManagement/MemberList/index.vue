@@ -11,7 +11,7 @@
 			:stripe="true"
 		>
 			<template #tableHeader>
-				<el-button type="primary" :icon="CirclePlus" @click="openDrawer('add')">添加</el-button>
+				<el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')">添加</el-button>
 			</template>
 
 			<!-- 表格操作 -->
@@ -29,15 +29,17 @@
 				</el-dropdown>
 			</template>
 		</ProTable>
+		<UserDrawer ref="drawerRef" />
 	</div>
 </template>
 
 <script setup lang="tsx" name="MemberList">
 import ProTable from "@/components/ProTable/index.vue";
+import UserDrawer from "@/views/MemberManagement/components/UserDrawer.vue";
 import { ColumnProps } from "@/components/ProTable/interface";
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 import { getUserList } from "@/api/user";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { CirclePlus } from "@element-plus/icons-vue";
 import { User } from "@/api/interface";
 // import moment from "moment";
@@ -46,18 +48,18 @@ const toDetail = (row: any) => {
 	console.log(row);
 };
 
-const headerRender = () => {
-	return (
-		<el-button
-			type="primary"
-			onClick={() => {
-				ElMessage.success("我是通过 tsx 语法渲染的表头");
-			}}
-		>
-			上级ID
-		</el-button>
-	);
-};
+// const headerRender = () => {
+// 	return (
+// 		<el-button
+// 			type="primary"
+// 			onClick={() => {
+// 				ElMessage.success("我是通过 tsx 语法渲染的表头");
+// 			}}
+// 		>
+// 			上级ID
+// 		</el-button>
+// 	);
+// };
 
 const columns: ColumnProps[] = [
 	{ type: "selection", fixed: "left", width: 80 },
@@ -76,7 +78,7 @@ const columns: ColumnProps[] = [
 		// 	);
 		// }
 	},
-	{ prop: "username", label: "用户账号", width: 200, search: { el: "input" } },
+	{ prop: "account_number", label: "用户账号", width: 200, search: { el: "input" } },
 	{
 		prop: "status",
 		label: "账号启动状态",
@@ -125,13 +127,13 @@ const columns: ColumnProps[] = [
 			// defaultValue: ["2023-01-01 08:00:00", moment().format("YYYY-MM-DD HH:mm:ss")]
 		}
 	},
-	{
-		prop: "parents_account.account_number",
-		label: "上级ID",
-		width: 200,
-		headerRender
-	},
-	{ prop: "parent_account_number", label: "上级账户", width: 200, search: { el: "input" } },
+	// {
+	// 	prop: "parents_account.account_number",
+	// 	label: "上级ID",
+	// 	width: 200,
+	// 	headerRender
+	// },
+	// { prop: "parent_account_number", label: "上级账户", width: 200, search: { el: "input" } },
 	{ prop: "operation", label: "操作", fixed: "right", width: 150 }
 ];
 
@@ -150,9 +152,15 @@ const dataCallback = (data: any) => {
 	};
 };
 
+const drawerRef = ref();
 // 打开 drawer(新增、查看、编辑)
 const openDrawer = (title: string, rowData: Partial<User.ResUserList> = {}) => {
-	console.log(title, rowData);
+	let params = {
+		title,
+		isView: title === "查看",
+		rowData: { ...rowData }
+	};
+	drawerRef.value.acceptParams(params);
 };
 </script>
 
