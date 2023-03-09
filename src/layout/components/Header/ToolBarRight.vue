@@ -2,6 +2,7 @@
 	<div class="tool-bar-ri">
 		<div class="header-icon">
 			<Language />
+			<SearchMenu />
 			<ThemeSetting />
 			<Fullscreen />
 		</div>
@@ -17,6 +18,7 @@ import Avatar from "./components/Avatar.vue";
 import Language from "./components/Language.vue";
 import ThemeSetting from "./components/ThemeSetting.vue";
 import Fullscreen from "./components/Fullscreen.vue";
+import SearchMenu from "./components/SearchMenu.vue";
 
 const globalStore = GlobalStore();
 const userInfo = computed(() => globalStore.userInfo);
@@ -32,7 +34,7 @@ const userInfo = computed(() => globalStore.userInfo);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		width: 90px;
+		width: 140px;
 		margin-right: 22px;
 	}
 	.username {
