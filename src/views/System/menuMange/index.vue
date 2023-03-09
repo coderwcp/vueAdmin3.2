@@ -1,7 +1,7 @@
 <template>
-	<div>Basis</div>
+	<div>menuMange</div>
 </template>
 
-<script setup lang="ts" name=""></script>
+<script setup lang="ts" name="menuMange"></script>
 
 <style lang="scss" scoped></style>

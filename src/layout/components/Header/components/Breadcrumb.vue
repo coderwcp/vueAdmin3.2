@@ -1,34 +1,22 @@
 <template>
-	<div :class="['breadcrumb-box', !breadcrumbIcon && 'no-icon']">
+	<div :class="['breadcrumb-box', !themeConfig.breadcrumbIcon && 'no-icon']">
 		<el-breadcrumb :separator-icon="ArrowRight">
-			<transition-group name="breadcrumb" mode="out-in">
-				<template v-if="breadcrumbList">
-					<!-- 首页面包屑不要可以直接删除 🙅‍♀️ -->
-					<el-breadcrumb-item :key="'/Home'" :to="{ path: '/Home' }" v-if="breadcrumbList[0].meta.title !== '首页'">
-						<div class="el-breadcrumb__inner is-link">
-							<el-icon class="breadcrumb-icon" v-if="breadcrumbIcon">
-								<HomeFilled />
-							</el-icon>
-							<span class="breadcrumb-title">首页</span>
-						</div>
-					</el-breadcrumb-item>
-					<!-- other -->
-
-					<el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="item.path">
-						<div class="el-breadcrumb__inner is-link" @click="onBreadcrumbClick(item, index)">
-							<el-icon class="breadcrumb-icon" v-if="item.meta.icon && breadcrumbIcon">
-								<component :is="item.meta.icon"></component>
-							</el-icon>
-							<span class="breadcrumb-title">{{ item.meta.title }}</span>
-						</div>
-					</el-breadcrumb-item></template
-				>
+			<transition-group name="breadcrumb">
+				<el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="item.path">
+					<div class="el-breadcrumb__inner is-link" @click="onBreadcrumbClick(item, index)">
+						<el-icon class="breadcrumb-icon" v-show="item.meta.icon && themeConfig.breadcrumbIcon">
+							<component :is="item.meta.icon"></component>
+						</el-icon>
+						<span class="breadcrumb-title">{{ item.meta.title }}</span>
+					</div>
+				</el-breadcrumb-item>
 			</transition-group>
 		</el-breadcrumb>
 	</div>
 </template>
 
 <script setup lang="ts" name="Breadcrumb">
+import { HOME_URL } from "@/config/config";
 import { GlobalStore } from "@/stores";
 import { AuthStore } from "@/stores/module/auth";
 import { ArrowRight } from "@element-plus/icons-vue";
@@ -39,8 +27,16 @@ const authStore = AuthStore();
 const route = useRoute();
 const router = useRouter();
 
-const breadcrumbIcon = computed(() => globalStore.themeConfig.breadcrumbIcon);
-const breadcrumbList = computed(() => authStore.breadcrumbListGet[route.matched[route.matched.length - 1].path]);
+const themeConfig = computed(() => globalStore.themeConfig);
+
+const breadcrumbList = computed(() => {
+	let breadcrumbData = authStore.breadcrumbListGet[route.matched[route.matched.length - 1].path] ?? [];
+	// 🙅‍♀️不需要首页面包屑可删除以下判断
+	if (breadcrumbData[0].meta.title !== route.meta.title) {
+		breadcrumbData = [{ path: HOME_URL, meta: { icon: "HomeFilled", title: "首页" } }, ...breadcrumbData];
+	}
+	return breadcrumbData;
+});
 
 const onBreadcrumbClick = (item: any, index: number) => {
 	if (index !== breadcrumbList.value.length - 1) router.push(item.path);
