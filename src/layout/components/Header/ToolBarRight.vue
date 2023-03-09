@@ -3,6 +3,7 @@
 		<div class="header-icon">
 			<Language />
 			<ThemeSetting />
+			<Fullscreen />
 		</div>
 		<span class="username">{{ userInfo.nickname || userInfo.username || "admin" }}</span>
 		<Avatar />
@@ -15,6 +16,8 @@ import { computed } from "vue";
 import Avatar from "./components/Avatar.vue";
 import Language from "./components/Language.vue";
 import ThemeSetting from "./components/ThemeSetting.vue";
+import Fullscreen from "./components/Fullscreen.vue";
+
 const globalStore = GlobalStore();
 const userInfo = computed(() => globalStore.userInfo);
 </script>
@@ -29,7 +32,7 @@ const userInfo = computed(() => globalStore.userInfo);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		width: 60px;
+		width: 90px;
 		margin-right: 22px;
 	}
 	.username {
