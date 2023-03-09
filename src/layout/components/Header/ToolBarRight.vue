@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts" name="ToolBarRight">
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { computed } from "vue";
 import Avatar from "./components/Avatar.vue";
 import Language from "./components/Language.vue";

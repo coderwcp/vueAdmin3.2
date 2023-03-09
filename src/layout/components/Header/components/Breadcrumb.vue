@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts" name="Breadcrumb">
-import { GlobalStore } from "@/store";
-import { AuthStore } from "@/store/module/auth";
+import { GlobalStore } from "@/stores";
+import { AuthStore } from "@/stores/module/auth";
 import { ArrowRight } from "@element-plus/icons-vue";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";

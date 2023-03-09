@@ -18,12 +18,12 @@
 
 <script setup lang="ts" name="Tabs">
 import Sortable from "sortablejs";
-import { TabStore } from "@/store/module/tabs";
+import { TabStore } from "@/stores/module/tabs";
 import { ref, computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import MoreButton from "./components/MoreButton.vue";
-import { AuthStore } from "@/store/module/auth";
+import { AuthStore } from "@/stores/module/auth";
 import { TabsPaneContext } from "element-plus";
 import router from "@/router";
 const route = useRoute();

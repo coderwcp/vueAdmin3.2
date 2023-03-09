@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts" name="Layout">
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { computed } from "vue";
 import LayoutVertical from "./LayoutVertical/index.vue";
 import LayoutClassic from "./LayoutClassic/index.vue";

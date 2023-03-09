@@ -1,7 +1,7 @@
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serviceLoading";
 import { ResultEnum } from "@/enums/httpEnum";
 import router from "@/router";
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ElMessage } from "element-plus";
 import { checkStatus } from "./helper/checkStatus";

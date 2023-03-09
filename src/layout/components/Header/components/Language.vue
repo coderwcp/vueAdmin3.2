@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts" name="Language">
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { getBrowserLang } from "@/utils";

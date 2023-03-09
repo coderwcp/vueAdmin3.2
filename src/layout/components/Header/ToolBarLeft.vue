@@ -9,7 +9,7 @@
 import CollapseIcon from "./components/CollapseIcon.vue";
 import Breadcrumb from "./components/Breadcrumb.vue";
 import { computed } from "vue";
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 const globalStore = GlobalStore();
 
 const breadcrumb = computed(() => globalStore.themeConfig.breadcrumb);

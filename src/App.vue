@@ -6,7 +6,7 @@
 
 <script setup lang="ts" name="App">
 import { computed } from "vue";
-import { GlobalStore } from "./store";
+import { GlobalStore } from "./stores";
 import { getBrowserLang } from "./utils";
 import en from "element-plus/es/locale/lang/en";
 import zhCn from "element-plus/es/locale/lang/zh-cn";

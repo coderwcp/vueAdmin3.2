@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts" name="CollapseIcon">
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { computed } from "vue";
 
 const globalStore = GlobalStore();

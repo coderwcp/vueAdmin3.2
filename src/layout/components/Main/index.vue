@@ -19,7 +19,7 @@
 import Tabs from "../Tabs/index.vue";
 import Footer from "../Footer/index.vue";
 import Maximize from "./components/Maximize.vue";
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { computed, ref, provide } from "vue";
 const globalStore = GlobalStore();
 

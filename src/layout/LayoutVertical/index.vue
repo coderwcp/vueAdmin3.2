@@ -33,8 +33,8 @@
 </template>
 
 <script setup lang="ts" name="LayoutVertical">
-import { GlobalStore } from "@/store";
-import { AuthStore } from "@/store/module/auth";
+import { GlobalStore } from "@/stores";
+import { AuthStore } from "@/stores/module/auth";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import SubMenu from "../components/Menu/SubMenu.vue";

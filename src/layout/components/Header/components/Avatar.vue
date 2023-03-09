@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts" name="Avatar">
-import { GlobalStore } from "@/store";
-import { TabStore } from "@/store/module/tabs";
+import { GlobalStore } from "@/stores";
+import { TabStore } from "@/stores/module/tabs";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref } from "vue";
 import { useRouter } from "vue-router";

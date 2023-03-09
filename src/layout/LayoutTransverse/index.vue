@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts" name="LayoutTransverse">
-import { AuthStore } from "@/store/module/auth";
+import { AuthStore } from "@/stores/module/auth";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SubMenu from "../components/Menu/SubMenu.vue";

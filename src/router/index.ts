@@ -1,6 +1,6 @@
 import { start, close } from "@/config/Nprogress";
-import { GlobalStore } from "@/store";
-import { AuthStore } from "@/store/module/auth";
+import { GlobalStore } from "@/stores";
+import { AuthStore } from "@/stores/module/auth";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { initDynamicRouter } from "./module/dynamicRouter";
 import { errorRouter, ROUTER_WHITE_LIST, staticRouter } from "./module/staticRouter";

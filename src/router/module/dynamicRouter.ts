@@ -1,5 +1,5 @@
-import { GlobalStore } from "@/store";
-import { AuthStore } from "@/store/module/auth";
+import { GlobalStore } from "@/stores";
+import { AuthStore } from "@/stores/module/auth";
 import { isType } from "@/utils";
 import { ElNotification } from "element-plus";
 import router from "..";

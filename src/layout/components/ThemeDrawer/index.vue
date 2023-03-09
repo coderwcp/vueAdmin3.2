@@ -59,7 +59,7 @@
 
 <script setup lang="ts" name="ThemeDrawer">
 import { ref, computed, watch } from "vue";
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import mittBus from "@/utils/mittBus";
 
 const globalStore = GlobalStore();

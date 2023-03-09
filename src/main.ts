@@ -21,7 +21,7 @@ import I18n from "@/languages/index";
 // vue Router
 import router from "./router";
 // pinia Store
-import pinia from "./store";
+import pinia from "./stores";
 
 const app = createApp(App);
 

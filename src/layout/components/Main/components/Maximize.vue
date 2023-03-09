@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts" name="Maximize">
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { watch, computed } from "vue";
 const globalStore = GlobalStore();
 

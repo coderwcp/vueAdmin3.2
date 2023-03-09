@@ -28,8 +28,8 @@
 
 <script setup lang="ts" name="MoreButton">
 import router from "@/router";
-import { GlobalStore } from "@/store";
-import { TabStore } from "@/store/module/tabs";
+import { GlobalStore } from "@/stores";
+import { TabStore } from "@/stores/module/tabs";
 import { inject, nextTick, computed } from "vue";
 import { useRoute } from "vue-router";
 const globalStore = GlobalStore();

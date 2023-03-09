@@ -27,7 +27,7 @@ import { ref, reactive } from "vue";
 import { Login } from "@/api/interface";
 import { loginApi } from "@/api/user";
 import { useRouter } from "vue-router";
-import { GlobalStore } from "@/store";
+import { GlobalStore } from "@/stores";
 import { initDynamicRouter } from "@/router/module/dynamicRouter";
 import { getTimeState } from "@/utils";
 const router = useRouter();
