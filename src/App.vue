@@ -8,8 +8,14 @@
 import { computed } from "vue";
 import { GlobalStore } from "./stores";
 import { getBrowserLang } from "./utils";
+import { useTheme } from "@/hooks/useTheme";
 import en from "element-plus/es/locale/lang/en";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
+
+// 初始化主题配置
+const { initTheme } = useTheme();
+initTheme();
+
 const globalStore = GlobalStore();
 
 // element 语言配置

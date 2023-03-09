@@ -54,6 +54,30 @@
 				</div>
 			</el-tooltip>
 		</div>
+		<br />
+
+		<!-- 全局主题 -->
+		<el-divider class="divider" content-position="center">
+			<el-icon><ColdDrink /></el-icon>
+			全局主题
+		</el-divider>
+		<div class="theme-item">
+			<span>主题颜色</span>
+			<el-color-picker v-model="themeConfig.primary" :predefine="colorList" @change="changePrimary" />
+		</div>
+		<div class="theme-item">
+			<span>暗黑模式</span>
+			<SwitchDark></SwitchDark>
+		</div>
+		<div class="theme-item">
+			<span>灰色模式</span>
+			<el-switch v-model="themeConfig.isGrey" @change="changeGreyOrWeak($event, 'grey')" />
+		</div>
+		<div class="theme-item">
+			<span>色弱模式</span>
+			<el-switch v-model="themeConfig.isWeak" @change="changeGreyOrWeak($event, 'weak')" />
+		</div>
+		<br />
 	</el-drawer>
 </template>
 
@@ -61,6 +85,11 @@
 import { ref, computed, watch } from "vue";
 import { GlobalStore } from "@/stores";
 import mittBus from "@/utils/mittBus";
+import { useTheme } from "@/hooks/useTheme";
+import { DEFAULT_PRIMARY } from "@/config/config";
+import SwitchDark from "@/components/SwitchDark/index.vue";
+
+const { changePrimary, changeGreyOrWeak } = useTheme();
 
 const globalStore = GlobalStore();
 const themeConfig = computed(() => globalStore.themeConfig);
@@ -83,6 +112,19 @@ watch(
 // 打开主题设置
 const drawerVisible = ref(false);
 mittBus.on("openThemeDrawer", () => (drawerVisible.value = true));
+
+const colorList = [
+	DEFAULT_PRIMARY,
+	"#DAA96E",
+	"#0C819F",
+	"#409EFF",
+	"#27ae60",
+	"#ff5c93",
+	"#e74c3c",
+	"#fd726d",
+	"#f39c12",
+	"#9b59b6"
+];
 </script>
 
 <style scoped lang="scss">
