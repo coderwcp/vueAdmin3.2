@@ -78,6 +78,36 @@
 			<el-switch v-model="themeConfig.isWeak" @change="changeGreyOrWeak($event, 'weak')" />
 		</div>
 		<br />
+
+		<!-- 界面设置 -->
+		<el-divider class="divider" content-position="center">
+			<el-icon><Setting /></el-icon>
+			界面设置
+		</el-divider>
+		<div class="theme-item">
+			<span>折叠菜单</span>
+			<el-switch v-model="themeConfig.isCollapse" />
+		</div>
+		<div class="theme-item">
+			<span>面包屑</span>
+			<el-switch v-model="themeConfig.breadcrumb" />
+		</div>
+		<div class="theme-item">
+			<span>面包屑图标</span>
+			<el-switch v-model="themeConfig.breadcrumbIcon" />
+		</div>
+		<div class="theme-item">
+			<span>标签栏</span>
+			<el-switch v-model="themeConfig.tabs" />
+		</div>
+		<div class="theme-item">
+			<span>标签栏图标</span>
+			<el-switch v-model="themeConfig.tabsIcon" />
+		</div>
+		<div class="theme-item">
+			<span>页脚</span>
+			<el-switch v-model="themeConfig.footer" />
+		</div>
 	</el-drawer>
 </template>
 
