@@ -10,12 +10,14 @@ declare interface ViteEnv {
 
 declare namespace Menu {
 	interface MenuOptions {
+		id: number;
 		path: string;
 		name: string;
 		component?: string | (() => Promise<any>);
 		redirect?: string;
 		meta: MetaProps;
 		children?: MenuOptions[];
+		parentId: number;
 	}
 	interface MetaProps {
 		icon: string;

@@ -66,8 +66,10 @@ export const useTable = (
 			// 根据分页展示数据
 			state.tableData = isPageable ? data.datalist : data;
 			// 解构后台返回的分页数据 (如果有分页更新分页信息)
-			const { pageNum, pageSize, total } = data;
-			isPageable && updatePageable({ pageNum, pageSize, total });
+			if (isPageable) {
+				const { pageNum, pageSize, total } = data;
+				updatePageable({ pageNum, pageSize, total });
+			}
 		} catch (error) {
 			console.log(error);
 		}
