@@ -26,10 +26,11 @@
 	</el-drawer>
 </template>
 
-<script setup lang="ts" name="MenuDrawer">
+<script setup lang="tsx" name="MenuDrawer">
 import { ref } from "vue";
 import ProForm from "@/components/ProForm/index.vue";
 import { Form } from "@/components/ProForm/interface";
+import { ElMessage } from "element-plus";
 
 interface DrawerProps {
 	title: string;
@@ -40,20 +41,66 @@ interface DrawerProps {
 }
 
 // 表单默认数据
-const model = { a: "", b: "" };
+const model = { a: "" };
 // 处理表单数据回调函数
 const dataCallback = (value: any) => {
 	return value;
 };
 // 表单项
 const formItem: Form.FieldItem[] = [
-	{ prop: "b", label: "b", enterable: true },
 	{
 		prop: "a",
 		label: "test",
 		labelWidth: 100,
 		rules: [{ required: true, message: "请输入", trigger: "blur" }],
-		type: "treeselect",
+		type: "checkbox",
+		bind: {
+			maxlength: 1
+		},
+		prefixIcon: <div>|</div>,
+		suffixIcon: <div>123</div>,
+		slotOption: [
+			// {
+			// 	slotName: "prefix",
+			// 	render() {
+			// 		return (
+			// 			<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗1" })}>
+			// 				按钮1
+			// 			</el-button>
+			// 		);
+			// 	}
+			// },
+			// {
+			// 	slotName: "append",
+			// 	render() {
+			// 		return (
+			// 			<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗2" })}>
+			// 				按钮2
+			// 			</el-button>
+			// 		);
+			// 	}
+			// },
+			{
+				slotName: "prepend",
+				render() {
+					return (
+						<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗" })}>
+							/
+						</el-button>
+					);
+				}
+			}
+			// {
+			// 	slotName: "suffix",
+			// 	render() {
+			// 		return (
+			// 			<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗4" })}>
+			// 				按钮4
+			// 			</el-button>
+			// 		);
+			// 	}
+			// }
+		],
 		readonly: false,
 		disabled: false,
 		placeholder: "请输入内容",
@@ -76,7 +123,7 @@ const formItem: Form.FieldItem[] = [
 						{ id: 9, name: "test" }
 					]
 				},
-				{ id: 5, name: "def", value: "2" }
+				{ id: 5, label: "132", name: "def", value: "2" }
 			]
 		}
 	}
