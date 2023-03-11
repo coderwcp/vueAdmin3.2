@@ -8,8 +8,20 @@
 				:rules="item.rules"
 				:label-width="item.labelWidth || 100"
 			>
+				<component :is="item.render" v-if="item.render" />
+				<!-- 树形选择 -->
+				<el-tree-select
+					v-else-if="item.type === 'treeselect'"
+					v-model="model[item.prop]"
+					:data="item.options?.data"
+					check-strictly
+					:render-after-expand="false"
+					show-checkbox
+					:props="item.options?.props ?? { label: 'label', children: 'children' }"
+					:node-key="item.options?.nodeKey ?? 'id'"
+				/>
 				<!-- 多选框 -->
-				<el-checkbox-group v-if="item.type === 'checkbox'" v-model="model[item.prop]">
+				<el-checkbox-group v-else-if="item.type === 'checkbox'" v-model="model[item.prop]">
 					<el-checkbox
 						:label="check[item.options?.labelkey || 'label']"
 						v-for="(check, cIdx) in item.options?.data"

@@ -8,9 +8,10 @@ export namespace Form {
 	export interface IFieldOptions {
 		labelkey?: string;
 		valueKey?: string;
-		props?: Partial<Record<"label" | "children", string>>;
+		nodeKey?: string;
+		props?: Partial<Record<"label" | "children", any>>;
 		placeholder?: string;
-		data: Record<string, any>[];
+		data: any;
 	}
 	export interface Options {
 		inline?: boolean;

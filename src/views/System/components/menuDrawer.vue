@@ -33,10 +33,11 @@
 </template>
 
 <script setup lang="tsx" name="MenuDrawer">
-import { ref } from "vue";
+import { ref, reactive, computed } from "vue";
 import ProForm from "@/components/ProForm/index.vue";
 import SelectIcon from "@/components/SelectIcon/index.vue";
 import { Form } from "@/components/ProForm/interface";
+import { AuthStore } from "@/stores/module/auth";
 
 interface DrawerProps {
 	title: string;
@@ -45,6 +46,8 @@ interface DrawerProps {
 	api?: (params: any) => Promise<any>;
 	getTableList?: () => Promise<any>;
 }
+const authStore = AuthStore();
+const menuList = computed(() => authStore.showMenuListGet);
 // drawer框状态
 const drawerVisible = ref(true);
 const drawerProps = ref<DrawerProps>({
@@ -74,11 +77,14 @@ const dataCallback = (value: any) => {
 	return value;
 };
 // 表单项
-const formItem: Form.FieldItem[] = [
+const formItem: Form.FieldItem[] = reactive([
 	{
 		prop: ["meta", "title"],
 		label: "名称",
 		placeholder: "请输入名称",
+		// readonly: drawerProps.value.isView ? true : true,
+		disabled: drawerProps.value.isView ? true : false,
+
 		rules: [{ required: true, message: "请输入名称", trigger: "blur" }]
 	},
 	{
@@ -109,8 +115,23 @@ const formItem: Form.FieldItem[] = [
 				></SelectIcon>
 			);
 		}
+	},
+	{
+		prop: "parentId",
+		label: "父级菜单",
+		type: "treeselect",
+		options: {
+			nodeKey: "id",
+			props: {
+				label(data: Menu.MenuOptions) {
+					return data.meta.title;
+				},
+				children: "children"
+			},
+			data: [{ id: 0, meta: { title: "默认" } }, ...menuList.value]
+		}
 	}
-];
+]);
 
 const changeIcon = (val: string) => {
 	drawerProps.value.rowData!.meta.icon = val;

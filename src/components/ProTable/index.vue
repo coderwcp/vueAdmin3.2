@@ -20,6 +20,7 @@
 				<el-button :icon="Refresh" circle @click="getTableList"></el-button>
 				<el-button :icon="Printer" circle v-if="columns.length" @click="handlePrint"></el-button>
 				<el-button :icon="Operation" circle v-if="columns.length" @click="openColSetting"></el-button>
+				<slot name="customLeftButton"></slot>
 			</div>
 		</div>
 
