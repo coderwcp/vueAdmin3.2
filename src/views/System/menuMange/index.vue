@@ -1,6 +1,6 @@
 <template>
 	<div class="height-ratio100">
-		<ProTable :request-api="getMenuList" :columns="columns" :pagination="false" />
+		<ProTable ref="proTable" :request-api="getMenuList" :columns="columns" :pagination="false" />
 		<MenuDrawer ref="drawerRef" />
 	</div>
 </template>
@@ -70,13 +70,14 @@ const addUser = () => {};
 const editUser = () => {};
 // 抽屉开关
 const drawerRef = ref();
+const proTable = ref();
 const openDarwer = (title: string, rowData: any) => {
-	console.log(title, rowData);
 	const params = {
 		title,
 		rowData: { ...rowData },
 		api: title === "新增" ? addUser : title === "编辑" ? editUser : "",
-		isView: title === "查看"
+		isView: title === "查看",
+		getTableList: proTable.value.getTableList
 	};
 	drawerRef.value.acceptParams(params);
 };

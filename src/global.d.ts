@@ -10,7 +10,7 @@ declare interface ViteEnv {
 
 declare namespace Menu {
 	interface MenuOptions {
-		id: number;
+		id?: number;
 		path: string;
 		name: string;
 		component?: string | (() => Promise<any>);

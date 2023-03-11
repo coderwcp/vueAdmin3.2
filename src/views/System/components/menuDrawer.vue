@@ -1,6 +1,12 @@
 <template>
 	<el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}权限`">
-		<ProForm ref="proForm" :data-callback="dataCallback" :form-item="formItem" :model="model" @submit="handleSubmit">
+		<ProForm
+			ref="proForm"
+			:data-callback="dataCallback"
+			:form-item="formItem"
+			:model="drawerProps.rowData"
+			@submit="handleSubmit"
+		>
 			<template #footer="{ row: { onSubmit } }">
 				<el-button @click="drawerVisible = false">取消</el-button>
 				<el-button type="primary" v-show="!drawerProps.isView" @click="onSubmit">确定</el-button>
@@ -29,8 +35,8 @@
 <script setup lang="tsx" name="MenuDrawer">
 import { ref } from "vue";
 import ProForm from "@/components/ProForm/index.vue";
+import SelectIcon from "@/components/SelectIcon/index.vue";
 import { Form } from "@/components/ProForm/interface";
-import { ElMessage } from "element-plus";
 
 interface DrawerProps {
 	title: string;
@@ -39,9 +45,30 @@ interface DrawerProps {
 	api?: (params: any) => Promise<any>;
 	getTableList?: () => Promise<any>;
 }
+// drawer框状态
+const drawerVisible = ref(true);
+const drawerProps = ref<DrawerProps>({
+	isView: false,
+	title: "",
+	rowData: {
+		path: "",
+		name: "",
+		parentId: 0,
+		component: "",
+		redirect: "",
+		meta: {
+			icon: "",
+			title: "",
+			activeMenu: "",
+			isLink: "",
+			isHide: false,
+			isFull: false,
+			isAffix: false,
+			isKeepAlive: false
+		}
+	}
+});
 
-// 表单默认数据
-const model = { a: "" };
 // 处理表单数据回调函数
 const dataCallback = (value: any) => {
 	return value;
@@ -49,92 +76,45 @@ const dataCallback = (value: any) => {
 // 表单项
 const formItem: Form.FieldItem[] = [
 	{
-		prop: "a",
-		label: "test",
-		labelWidth: 100,
-		rules: [{ required: true, message: "请输入", trigger: "blur" }],
-		type: "checkbox",
-		bind: {
-			maxlength: 1
-		},
-		prefixIcon: <div>|</div>,
-		suffixIcon: <div>123</div>,
-		slotOption: [
-			// {
-			// 	slotName: "prefix",
-			// 	render() {
-			// 		return (
-			// 			<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗1" })}>
-			// 				按钮1
-			// 			</el-button>
-			// 		);
-			// 	}
-			// },
-			// {
-			// 	slotName: "append",
-			// 	render() {
-			// 		return (
-			// 			<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗2" })}>
-			// 				按钮2
-			// 			</el-button>
-			// 		);
-			// 	}
-			// },
+		prop: ["meta", "title"],
+		label: "名称",
+		placeholder: "请输入名称",
+		rules: [{ required: true, message: "请输入名称", trigger: "blur" }]
+	},
+	{
+		prop: "path",
+		label: "路径",
+		placeholder: "请输入路径",
+		rules: [{ required: true, message: "请输入名称", trigger: "blur" }],
+		slotOption: [{ slotName: "prepend", render: () => <>/</> }]
+	},
+	{
+		prop: ["meta", "icon"],
+		label: "图标",
+		rules: [
 			{
-				slotName: "prepend",
-				render() {
-					return (
-						<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗" })}>
-							/
-						</el-button>
-					);
-				}
-			}
-			// {
-			// 	slotName: "suffix",
-			// 	render() {
-			// 		return (
-			// 			<el-button type="primary" onClick={() => ElMessage({ type: "success", message: "我是弹窗4" })}>
-			// 				按钮4
-			// 			</el-button>
-			// 		);
-			// 	}
-			// }
-		],
-		readonly: false,
-		disabled: false,
-		placeholder: "请输入内容",
-		// showPassword: true,
-		clearable: true,
-		enterable: true, //回车触发提交,
-		options: {
-			valueKey: "id",
-			props: {
-				label: "name"
-			},
-			data: [
-				{
-					id: 4,
-					name: "abc",
-					label: "1",
-					value: "1",
-					children: [
-						{ id: 7, name: "test1" },
-						{ id: 9, name: "test" }
-					]
+				required: true,
+				validator(rule, cellValue, callback) {
+					if (!cellValue) return callback("请选择图标");
+					return callback();
 				},
-				{ id: 5, label: "132", name: "def", value: "2" }
-			]
+				trigger: ["change", "blur"]
+			}
+		],
+		render() {
+			return (
+				<SelectIcon
+					iconValue={drawerProps.value.rowData?.meta.icon}
+					onChange={(newVal: string) => changeIcon(newVal)}
+				></SelectIcon>
+			);
 		}
 	}
 ];
 
-// drawer框状态
-const drawerVisible = ref(true);
-const drawerProps = ref<DrawerProps>({
-	isView: false,
-	title: ""
-});
+const changeIcon = (val: string) => {
+	drawerProps.value.rowData!.meta.icon = val;
+};
 
 // 接收父组件传过来的参数
 const acceptParams = (params: DrawerProps): void => {

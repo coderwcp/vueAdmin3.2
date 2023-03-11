@@ -28,13 +28,13 @@ export namespace Form {
 	}
 	export interface SlotOptions {
 		slotName: slotName;
-		render: () => any; // 自定义单元格内容渲染（tsx语法）
+		render: () => Component; // 自定义单元格内容渲染（tsx语法）
 	}
 
 	export interface FieldItem {
 		label?: string;
 		labelWidth?: string | number; // 标签宽度，例如 '50px'。 可以使用 auto。
-		prop: string;
+		prop: string | string[];
 		type?: ItemType;
 		value?: any;
 		bind?: any;
@@ -45,6 +45,7 @@ export namespace Form {
 		disabled?: boolean;
 		readonly?: boolean;
 		options?: IFieldOptions;
+		render?: () => any;
 		rules?: import("element-plus").FormItemRule[];
 		clearable?: boolean; // 是否可清空
 		showPassword?: boolean; // 是否显示切换密码图标

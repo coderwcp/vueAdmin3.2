@@ -1,50 +1,72 @@
 <template>
 	<el-form @submit.prevent :model="model" v-bind="_options" ref="formRef">
-		<el-form-item
-			v-for="(item, index) in formItem"
-			:key="index"
-			:label="item.label"
-			:prop="item.prop"
-			:rules="item.rules"
-			:label-width="item.labelWidth || 100"
-		>
-			<!-- 多选框 -->
-			<el-checkbox-group v-if="item.type === 'checkbox'" v-model="model[item.prop]">
-				<el-checkbox
-					:label="check[item.options?.labelkey || 'label']"
-					v-for="(check, cIdx) in item.options?.data"
-					:key="cIdx"
-				></el-checkbox>
-			</el-checkbox-group>
-			<!-- 单选框组 -->
-			<el-radio-group v-else-if="item.type === 'radio'" :disabled="item.disabled" v-model="model[item.prop]">
-				<el-radio
-					v-for="(radio, rIdx) in item.options?.data"
-					:key="rIdx"
-					:label="radio[item.options?.labelkey || 'label']"
-					:disabled="radio.disabled"
-				></el-radio>
-			</el-radio-group>
-			<!-- 默认输入框 -->
-			<el-input
-				v-else
-				:type="item.type ?? 'text'"
-				v-model="model[item.prop]"
-				v-bind="item.bind"
-				:placeholder="item.placeholder || item.label"
-				:clearable="item.clearable"
-				:disabled="item.disabled"
-				:readonly="item.readonly"
-				:show-password="item.showPassword"
-				:prefix-icon="item.prefixIcon"
-				:suffix-icon="item.suffixIcon"
-				@keyyp.enter="handleKeyUp(item.enterable)"
+		<template v-for="(item, index) in formItem" :key="index">
+			<el-form-item
+				v-if="!Array.isArray(item.prop)"
+				:label="item.label"
+				:prop="item.prop"
+				:rules="item.rules"
+				:label-width="item.labelWidth || 100"
 			>
-				<!-- <template v-for="({ slotName, render }, sIdx) in item.slotOption" :key="sIdx" #[slotName]>
-					<component :is="render()" />
-				</template> -->
-			</el-input>
-		</el-form-item>
+				<!-- 多选框 -->
+				<el-checkbox-group v-if="item.type === 'checkbox'" v-model="model[item.prop]">
+					<el-checkbox
+						:label="check[item.options?.labelkey || 'label']"
+						v-for="(check, cIdx) in item.options?.data"
+						:key="cIdx"
+					></el-checkbox>
+				</el-checkbox-group>
+				<!-- 单选框组 -->
+				<el-radio-group v-else-if="item.type === 'radio'" :disabled="item.disabled" v-model="model[item.prop]">
+					<el-radio
+						v-for="(radio, rIdx) in item.options?.data"
+						:key="rIdx"
+						:label="radio[item.options?.labelkey || 'label']"
+						:disabled="radio.disabled"
+					></el-radio>
+				</el-radio-group>
+				<!-- 默认输入框 -->
+				<el-input
+					v-else
+					:type="item.type ?? 'text'"
+					v-model="model[item.prop]"
+					v-bind="item.bind"
+					:placeholder="item.placeholder || item.label"
+					:clearable="item.clearable"
+					:disabled="item.disabled"
+					:readonly="item.readonly"
+					:show-password="item.showPassword"
+					:prefix-icon="item.prefixIcon"
+					:suffix-icon="item.suffixIcon"
+					@keyyp.enter="handleKeyUp(item.enterable)"
+				>
+					<template v-for="({ slotName, render }, sIdx) in item.slotOption" :key="sIdx" #[slotName]>
+						<component :is="render()" />
+					</template>
+				</el-input>
+			</el-form-item>
+			<el-form-item v-else :label="item.label" :prop="item.prop" :rules="item.rules" :label-width="item.labelWidth || 100">
+				<component :is="item.render()" v-if="item.render" />
+				<el-input
+					v-else
+					:type="item.type ?? 'text'"
+					v-model="model[item.prop[0]][item.prop[1]]"
+					v-bind="item.bind"
+					:placeholder="item.placeholder || item.label"
+					:clearable="item.clearable"
+					:disabled="item.disabled"
+					:readonly="item.readonly"
+					:show-password="item.showPassword"
+					:prefix-icon="item.prefixIcon"
+					:suffix-icon="item.suffixIcon"
+					@keyyp.enter="handleKeyUp(item.enterable)"
+				>
+					<template v-for="({ slotName, render }, sIdx) in item.slotOption" :key="sIdx" #[slotName]>
+						<component :is="render()" />
+					</template>
+				</el-input>
+			</el-form-item>
+		</template>
 	</el-form>
 </template>
 
@@ -65,7 +87,8 @@ const formRef = ref<FormInstance>();
 const props = defineProps<Props>();
 // 设置option默认值，如果传入自定义的配置则合并option配置项
 const _options: ComputedRef<Form.Options> = computed(() => {
-	const option = {
+	const option: Form.Options = {
+		labelSuffix: ":",
 		labelPosition: "right",
 		disabled: false,
 		submitButtonText: "提交",
@@ -88,7 +111,7 @@ defineExpose({
 props.formItem.map((item: Form.FieldItem) => {
 	// 如果类型为checkbox，默认值需要设置一个空数组
 	const value = item.type === "checkbox" ? [] : "";
-	props.model ? (model.value = props.model) : (model.value[item.prop] = item.value || value);
+	props.model ? (model.value = props.model) : (model.value[item.prop as string] = item.value || value);
 });
 // 提交按钮
 const onSubmit = (formEl: FormInstance | undefined) => {
