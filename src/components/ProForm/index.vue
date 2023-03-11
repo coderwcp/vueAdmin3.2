@@ -17,6 +17,7 @@
 					check-strictly
 					:render-after-expand="false"
 					show-checkbox
+					:clearable="item.clearable"
 					:props="item.options?.props ?? { label: 'label', children: 'children' }"
 					:node-key="item.options?.nodeKey ?? 'id'"
 				/>
@@ -59,6 +60,22 @@
 			</el-form-item>
 			<el-form-item v-else :label="item.label" :prop="item.prop" :rules="item.rules" :label-width="item.labelWidth || 100">
 				<component :is="item.render()" v-if="item.render" />
+				<!-- 单选框组 -->
+				<el-radio-group
+					v-else-if="item.type === 'radio'"
+					:disabled="item.disabled"
+					v-model="model[item.prop[0]][item.prop[1]]"
+					aria-label="123"
+				>
+					<el-radio
+						v-for="(radio, rIdx) in item.options?.data"
+						:key="rIdx"
+						:label="radio[item.options?.valueKey || 'value']"
+						:value="12313"
+						:disabled="radio.disabled"
+						>{{ radio[item.options?.labelkey || "label"] }}</el-radio
+					>
+				</el-radio-group>
 				<el-input
 					v-else
 					:type="item.type ?? 'text'"

@@ -120,6 +120,8 @@ const formItem: Form.FieldItem[] = reactive([
 		prop: "parentId",
 		label: "父级菜单",
 		type: "treeselect",
+		rules: [{ required: true, message: "请选择父级菜单", trigger: ["change"] }],
+		clearable: true,
 		options: {
 			nodeKey: "id",
 			props: {
@@ -129,6 +131,25 @@ const formItem: Form.FieldItem[] = reactive([
 				children: "children"
 			},
 			data: [{ id: 0, meta: { title: "默认" } }, ...menuList.value]
+		}
+	},
+	{
+		prop: ["meta", "isFull"],
+		label: "是否全屏",
+		type: "radio",
+		options: {
+			labelkey: "label",
+			valueKey: "value",
+			data: [
+				{
+					label: "是",
+					value: true
+				},
+				{
+					label: "否",
+					value: false
+				}
+			]
 		}
 	}
 ]);
