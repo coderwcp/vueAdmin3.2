@@ -39,6 +39,23 @@ export function getFlatMenuList(menuList: Menu.MenuOptions[]) {
 }
 
 /**
+ * @description 扁平数组转为树形结构(主要用来处理路由菜单)
+ * @param {Array} menuList 所有菜单列表
+ * @return array
+ */
+export function tranListToTreeData(menuList: Menu.MenuOptions[], rootValue: number = 0) {
+	const array: Menu.MenuOptions[] = [];
+	menuList.forEach(item => {
+		if (item.parentId === rootValue) {
+			const children = tranListToTreeData(menuList, item.id);
+			children.length && (item.children = children);
+			array.push(item);
+		}
+	});
+	return array;
+}
+
+/**
  * @description 递归找出所有面包屑存储到 pinia/vuex 中
  * @param {Array} menuList 所有菜单列表
  * @param {Object} result 输出的结果

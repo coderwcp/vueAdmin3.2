@@ -34,9 +34,10 @@
 					<el-radio
 						v-for="(radio, rIdx) in item.options?.data"
 						:key="rIdx"
-						:label="radio[item.options?.labelkey || 'label']"
+						:label="radio[item.options?.valueKey || 'value']"
 						:disabled="radio.disabled"
-					></el-radio>
+						>{{ radio[item.options?.labelkey || "label"] }}</el-radio
+					>
 				</el-radio-group>
 				<!-- 默认输入框 -->
 				<el-input
@@ -96,6 +97,10 @@
 				</el-input>
 			</el-form-item>
 		</template>
+
+		<el-form-item>
+			<slot name="footer" :row="{ onSubmit, formRef }"></slot>
+		</el-form-item>
 	</el-form>
 </template>
 
@@ -108,6 +113,7 @@ interface Props {
 	formItem: Form.FieldItem[];
 	model?: Record<string, any>;
 	options?: Form.Options;
+	dataCallback?: (params: any) => any;
 }
 
 // 表单的数据
@@ -119,6 +125,7 @@ const _options: ComputedRef<Form.Options> = computed(() => {
 	const option: Form.Options = {
 		labelSuffix: ":",
 		labelPosition: "right",
+		labelWidth: 100,
 		disabled: false,
 		submitButtonText: "提交",
 		resetButtonText: "重置",
@@ -147,7 +154,7 @@ const onSubmit = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.validate(valid => {
 		if (valid) {
-			emit("submit", model.value);
+			emit("submit", props.dataCallback ? props.dataCallback(model.value) : model.value);
 		} else {
 			return false;
 		}
@@ -163,7 +170,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.resetFields();
 };
-console.log(resetForm);
+if (false) resetForm(undefined);
 </script>
 
 <style lang="scss" scoped></style>

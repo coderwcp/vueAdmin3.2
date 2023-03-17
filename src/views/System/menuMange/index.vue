@@ -17,6 +17,7 @@ import ProTable from "@/components/ProTable/index.vue";
 import MenuDrawer from "../components/menuDrawer.vue";
 import { Edit } from "@element-plus/icons-vue";
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serviceLoading";
+import { addAuthApi, editAuthApi } from "@/api/system";
 
 const authStore = AuthStore();
 
@@ -59,6 +60,13 @@ const columns: ColumnProps<Menu.MenuOptions>[] = [
 		}
 	},
 	{
+		prop: "isMenu",
+		label: "是否菜单",
+		render({ row }) {
+			return row.isMenu ? "是" : "否";
+		}
+	},
+	{
 		prop: "operation",
 		label: "操作",
 		render({ row }) {
@@ -68,14 +76,13 @@ const columns: ColumnProps<Menu.MenuOptions>[] = [
 					style={{ fontSize: "20px" }}
 					link={true}
 					icon={Edit}
-					onClick={() => openDarwer("查看", row)}
+					onClick={() => openDarwer("编辑", row)}
 				></el-button>
 			);
 		}
 	}
 ];
-const addUser = () => {};
-const editUser = () => {};
+
 // 抽屉开关
 const drawerRef = ref();
 const proTable = ref();
@@ -87,6 +94,7 @@ const openDarwer = (
 		parentId: 0,
 		component: "",
 		redirect: "",
+		isMenu: true,
 		meta: {
 			icon: "",
 			title: "",
@@ -101,8 +109,8 @@ const openDarwer = (
 ) => {
 	const params = {
 		title,
-		rowData: { ...rowData },
-		api: title === "新增" ? addUser : title === "编辑" ? editUser : "",
+		rowData: JSON.parse(JSON.stringify({ ...rowData, path: rowData.path.split("/").pop() })),
+		api: title === "新增" ? addAuthApi : title === "编辑" ? editAuthApi : "",
 		isView: title === "查看",
 		getTableList: proTable.value.getTableList,
 		list: menuList

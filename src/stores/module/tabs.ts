@@ -6,15 +6,7 @@ import { TabsMenuProps, TabState } from "../interface";
 export const TabStore = defineStore({
 	id: "TabsState",
 	state: (): TabState => ({
-		tabsMenuList: [
-			{
-				close: true,
-				title: "test",
-				path: "test",
-				icon: "Histogram",
-				name: "test"
-			}
-		]
+		tabsMenuList: []
 	}),
 	actions: {
 		// Add Tabs

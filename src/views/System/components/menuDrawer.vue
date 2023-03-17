@@ -7,28 +7,11 @@
 			:model="drawerProps.rowData"
 			@submit="handleSubmit"
 		>
-			<template #footer="{ row: { onSubmit } }">
+			<template #footer="{ row: { onSubmit, formRef } }">
 				<el-button @click="drawerVisible = false">取消</el-button>
-				<el-button type="primary" v-show="!drawerProps.isView" @click="onSubmit">确定</el-button>
+				<el-button type="primary" v-show="!drawerProps.isView" @click="onSubmit(formRef)">确定</el-button>
 			</template>
 		</ProForm>
-		<div style="margin-top: 200px">
-			<div>{{ "id: " + drawerProps.rowData?.id }}</div>
-			<div>{{ "path: " + drawerProps.rowData?.path }}</div>
-			<div>{{ "name: " + drawerProps.rowData?.name }}</div>
-			<div>{{ "component: " + drawerProps.rowData?.component }}</div>
-			<div>{{ "redirect: " + drawerProps.rowData?.redirect }}</div>
-			<div>{{ "parentId: " + drawerProps.rowData?.parentId }}</div>
-			<el-divider />
-			<div>{{ "icon: " + drawerProps.rowData?.meta.icon }}</div>
-			<div>{{ "title: " + drawerProps.rowData?.meta.title }}</div>
-			<div>{{ "activeMenu: " + drawerProps.rowData?.meta.activeMenu }}</div>
-			<div>{{ "isLink: " + drawerProps.rowData?.meta.isLink }}</div>
-			<div>{{ "isHide: " + drawerProps.rowData?.meta.isHide }}</div>
-			<div>{{ "isFull: " + drawerProps.rowData?.meta.isFull }}</div>
-			<div>{{ "isAffix: " + drawerProps.rowData?.meta.isAffix }}</div>
-			<div>{{ "isKeepAlive: " + drawerProps.rowData?.meta.isKeepAlive }}</div>
-		</div>
 	</el-drawer>
 </template>
 
@@ -38,6 +21,8 @@ import ProForm from "@/components/ProForm/index.vue";
 import SelectIcon from "@/components/SelectIcon/index.vue";
 import { Form } from "@/components/ProForm/interface";
 import { AuthStore } from "@/stores/module/auth";
+import { ElMessage } from "element-plus";
+import { getFlatMenuList, tranListToTreeData } from "@/utils";
 
 interface DrawerProps {
 	title: string;
@@ -49,7 +34,7 @@ interface DrawerProps {
 const authStore = AuthStore();
 const menuList = computed(() => authStore.showMenuListGet);
 // drawer框状态
-const drawerVisible = ref(true);
+const drawerVisible = ref(false);
 const drawerProps = ref<DrawerProps>({
 	isView: false,
 	title: "",
@@ -59,6 +44,7 @@ const drawerProps = ref<DrawerProps>({
 		parentId: 0,
 		component: "",
 		redirect: "",
+		isMenu: true,
 		meta: {
 			icon: "",
 			title: "",
@@ -73,8 +59,12 @@ const drawerProps = ref<DrawerProps>({
 });
 
 // 处理表单数据回调函数
-const dataCallback = (value: any) => {
-	return value;
+const dataCallback = (value: Menu.MenuOptions) => {
+	const tempObj: Menu.MenuOptions = JSON.parse(JSON.stringify(value));
+	tempObj.path = (value.parentId === 0 ? "/" : menuList.value.find(v => v.id === value.parentId)?.path + "/") + value.path;
+	tempObj.component = tempObj.path;
+	tempObj.name = value.path;
+	return tempObj;
 };
 // 表单项
 const formItem: Form.FieldItem[] = reactive([
@@ -82,9 +72,7 @@ const formItem: Form.FieldItem[] = reactive([
 		prop: ["meta", "title"],
 		label: "名称",
 		placeholder: "请输入名称",
-		// readonly: drawerProps.value.isView ? true : true,
 		disabled: drawerProps.value.isView ? true : false,
-
 		rules: [{ required: true, message: "请输入名称", trigger: "blur" }]
 	},
 	{
@@ -130,12 +118,91 @@ const formItem: Form.FieldItem[] = reactive([
 				},
 				children: "children"
 			},
-			data: [{ id: 0, meta: { title: "默认" } }, ...menuList.value]
+			data: [
+				{ id: 0, disabled: false, meta: { title: "默认" } },
+				...tranListToTreeData(getFlatMenuList(menuList.value).map(v => ({ ...v, disabled: v.isMenu ? false : true })))
+			]
+		}
+	},
+	{
+		prop: "isMenu",
+		label: "是否菜单",
+		type: "radio",
+		options: {
+			labelkey: "label",
+			valueKey: "value",
+			data: [
+				{
+					label: "是",
+					value: true
+				},
+				{
+					label: "否",
+					value: false
+				}
+			]
 		}
 	},
 	{
 		prop: ["meta", "isFull"],
 		label: "是否全屏",
+		type: "radio",
+		options: {
+			labelkey: "label",
+			valueKey: "value",
+			data: [
+				{
+					label: "是",
+					value: true
+				},
+				{
+					label: "否",
+					value: false
+				}
+			]
+		}
+	},
+	{
+		prop: ["meta", "isAffix"],
+		label: "是否固定",
+		type: "radio",
+		options: {
+			labelkey: "label",
+			valueKey: "value",
+			data: [
+				{
+					label: "是",
+					value: true
+				},
+				{
+					label: "否",
+					value: false
+				}
+			]
+		}
+	},
+	{
+		prop: ["meta", "isHide"],
+		label: "是否隐藏",
+		type: "radio",
+		options: {
+			labelkey: "label",
+			valueKey: "value",
+			data: [
+				{
+					label: "是",
+					value: true
+				},
+				{
+					label: "否",
+					value: false
+				}
+			]
+		}
+	},
+	{
+		prop: ["meta", "isKeepAlive"],
+		label: "是否缓存",
 		type: "radio",
 		options: {
 			labelkey: "label",
@@ -166,19 +233,17 @@ const acceptParams = (params: DrawerProps): void => {
 
 // 提交数据（新增/编辑）
 const proForm = ref();
-const handleSubmit = (val: object | Function) => {
-	console.log(val);
-	// ruleFormRef.value!.validate(async valid => {
-	// 	if (!valid) return;
-	// 	try {
-	// 		await drawerProps.value.api!(drawerProps.value.rowData);
-	// 		ElMessage.success({ message: `${drawerProps.value.title}权限成功！` });
-	// 		drawerProps.value.getTableList!();
-	// 		drawerVisible.value = false;
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// });
+const handleSubmit = async (val: Menu.MenuOptions) => {
+	if (!val) return;
+	try {
+		await drawerProps.value.api!(val);
+		ElMessage.success({ message: `${drawerProps.value.title}权限成功！` });
+		// 更新 authStore 数据
+		authStore.getAuthMenuList(false);
+		drawerVisible.value = false;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 defineExpose({

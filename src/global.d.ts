@@ -16,6 +16,7 @@ declare namespace Menu {
 		component?: string | (() => Promise<any>);
 		redirect?: string;
 		meta: MetaProps;
+		isMenu: boolean;
 		children?: MenuOptions[];
 		parentId: number;
 	}
