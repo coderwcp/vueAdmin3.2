@@ -14,10 +14,12 @@
 					v-else-if="item.type === 'treeselect'"
 					v-model="model[item.prop]"
 					:data="item.options?.data"
-					check-strictly
+					:check-strictly="item.options?.checkStrictly || false"
 					:render-after-expand="false"
-					show-checkbox
+					:show-checkbox="item.options?.showCheckbox ?? false"
+					:multiple="item.options?.multiple || false"
 					:clearable="item.clearable"
+					:collapse-tags="item.options?.collapseTags ?? false"
 					:props="item.options?.props ?? { label: 'label', children: 'children' }"
 					:node-key="item.options?.nodeKey ?? 'id'"
 				/>

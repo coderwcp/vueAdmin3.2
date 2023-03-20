@@ -13,7 +13,7 @@ export const editAuthApi = (params: Menu.MenuOptions) => {
 	return request.put<Result>("/system/auth", params);
 };
 
-// 权限列表
-export function getMenuListApi(noLoading: boolean) {
-	return request.post<Menu.MenuOptions[]>("/menu", {}, { headers: { noLoading: noLoading } });
+// * 权限列表
+export function getMenuListApi(noLoading?: boolean) {
+	return request.post<Menu.MenuOptions[]>("/menu", {}, { headers: { noLoading: noLoading || false } });
 }

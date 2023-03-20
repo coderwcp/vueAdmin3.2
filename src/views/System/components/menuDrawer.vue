@@ -112,6 +112,7 @@ const formItem: Form.FieldItem[] = reactive([
 		clearable: true,
 		options: {
 			nodeKey: "id",
+			showCheckbox: true,
 			props: {
 				label(data: Menu.MenuOptions) {
 					return data.meta.title;

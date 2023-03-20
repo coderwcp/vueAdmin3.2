@@ -9,8 +9,17 @@ export namespace Form {
 		labelkey?: string;
 		valueKey?: string;
 		nodeKey?: string;
-		props?: Partial<Record<"label" | "children", any>>;
+		// label	指定节点标签为节点对象的某个属性值	string, function(data, node)	—	—
+		// children	指定子树为节点对象的某个属性值	string	—	—
+		// disabled	指定节点选择框是否禁用为节点对象的某个属性值	string, function(data, node)	—	—
+		// isLeaf	指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效	string, function(data, node)	—	—
+		// class	自定义节点类名	string, function(data, node)	—	—
+		props?: Partial<Record<"label" | "children" | "disabled" | "isLeaf" | "class", any>>;
 		placeholder?: string;
+		showCheckbox?: boolean;
+		multiple?: boolean;
+		collapseTags?: boolean;
+		checkStrictly?: boolean; // 在显示复选框的情况下，是否严格的遵循父子不互相关联的做法，默认为 false
 		data: any;
 	}
 	export interface Options {
