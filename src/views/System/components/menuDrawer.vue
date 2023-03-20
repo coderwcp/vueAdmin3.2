@@ -22,7 +22,6 @@ import SelectIcon from "@/components/SelectIcon/index.vue";
 import { Form } from "@/components/ProForm/interface";
 import { AuthStore } from "@/stores/module/auth";
 import { ElMessage } from "element-plus";
-import { getFlatMenuList, tranListToTreeData } from "@/utils";
 
 interface DrawerProps {
 	title: string;
@@ -117,12 +116,12 @@ const formItem: Form.FieldItem[] = reactive([
 				label(data: Menu.MenuOptions) {
 					return data.meta.title;
 				},
+				disabled(data: Menu.MenuOptions) {
+					return !data.isMenu;
+				},
 				children: "children"
 			},
-			data: [
-				{ id: 0, disabled: false, meta: { title: "默认" } },
-				...tranListToTreeData(getFlatMenuList(menuList.value).map(v => ({ ...v, disabled: v.isMenu ? false : true })))
-			]
+			data: [{ id: 0, isMenu: false, meta: { title: "默认" } }, ...menuList.value]
 		}
 	},
 	{
