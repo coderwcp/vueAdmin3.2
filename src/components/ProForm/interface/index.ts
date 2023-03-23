@@ -41,7 +41,7 @@ export namespace Form {
 		render: () => Component; // 自定义单元格内容渲染（tsx语法）
 	}
 
-	export interface FieldItem {
+	export interface FieldItem<T = any> {
 		label?: string;
 		labelWidth?: string | number; // 标签宽度，例如 '50px'。 可以使用 auto。
 		prop: string | string[];
@@ -55,10 +55,11 @@ export namespace Form {
 		disabled?: boolean;
 		readonly?: boolean;
 		options?: IFieldOptions;
-		render?: () => any;
+		render?: (scope: { row: T }) => any;
 		rules?: import("element-plus").FormItemRule[];
 		clearable?: boolean; // 是否可清空
 		showPassword?: boolean; // 是否显示切换密码图标
 		enterable?: boolean; // 当为输入框时，是否启用回车触发提交功能
+		handleNodeClick?: (data: T) => any;
 	}
 }

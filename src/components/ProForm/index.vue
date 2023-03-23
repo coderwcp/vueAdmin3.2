@@ -62,7 +62,7 @@
 				</el-input>
 			</el-form-item>
 			<el-form-item v-else :label="item.label" :prop="item.prop" :rules="item.rules" :label-width="item.labelWidth || 100">
-				<component :is="item.render()" v-if="item.render" />
+				<component :is="item.render({ row: item })" v-if="item.render" />
 				<!-- 单选框组 -->
 				<el-radio-group
 					v-else-if="item.type === 'radio'"
@@ -151,6 +151,7 @@ props.formItem.map((item: Form.FieldItem) => {
 	const value = item.type === "checkbox" ? [] : "";
 	props.model ? (model.value = props.model) : (model.value[item.prop as string] = item.value || value);
 });
+
 // 提交按钮
 const onSubmit = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;

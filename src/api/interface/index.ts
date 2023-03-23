@@ -63,6 +63,13 @@ export namespace User {
 	}
 }
 
+// * 角色
+export interface Role {
+	roleName: string;
+	roleDesc: string;
+	authIds: number[] | string;
+}
+
 // * 文件上传模块
 export namespace Upload {
 	export interface ResFileUrl {

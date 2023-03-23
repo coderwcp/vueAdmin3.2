@@ -1,5 +1,5 @@
 <template>
-	<el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}权限`">
+	<el-drawer v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}角色`">
 		<ProForm
 			ref="proForm"
 			:data-callback="dataCallback"
@@ -15,34 +15,45 @@
 	</el-drawer>
 </template>
 
-<script setup lang="tsx" name="MenuDrawer">
+<script setup lang="tsx" name="RoleDrawer">
 import { ref, reactive, computed } from "vue";
 import ProForm from "@/components/ProForm/index.vue";
 import { Form } from "@/components/ProForm/interface";
 import { AuthStore } from "@/stores/module/auth";
 import { ElMessage } from "element-plus";
+import { Role } from "@/api/interface";
+import { getFlatMenuList } from "@/utils";
 
 interface DrawerProps {
 	title: string;
 	isView: boolean;
-	rowData?: any;
+	rowData?: Role;
 	api?: (params: any) => Promise<any>;
 	getTableList?: () => Promise<any>;
 }
 const authStore = AuthStore();
 const menuList = computed(() => authStore.showMenuListGet);
-console.log(menuList);
 
 // drawer框状态
 const drawerVisible = ref(false);
 const drawerProps = ref<DrawerProps>({
 	isView: false,
-	title: "",
-	rowData: {}
+	title: ""
 });
 
 // 处理表单数据回调函数
 const dataCallback = (value: any) => {
+	const flatMenuList = getFlatMenuList(menuList.value);
+	console.log(flatMenuList);
+	if (!Array.isArray(drawerProps.value.rowData?.authIds)) return value;
+	const ids = drawerProps.value.rowData?.authIds as number[];
+	flatMenuList.forEach(item => {
+		if (item.children) {
+			!item.children.map(v => v.id).every(v => (ids as number[]).find(t => t == v)) &&
+				(drawerProps.value.rowData?.authIds as number[]).push(item.id as number);
+		}
+	});
+	console.log(value);
 	return value;
 };
 
@@ -51,6 +62,7 @@ const formItem: Form.FieldItem[] = reactive([
 	{
 		prop: "roleName",
 		label: "角色名称",
+		enterable: true,
 		placeholder: "请输入角色名称",
 		disabled: drawerProps.value.isView ? true : false,
 		rules: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
@@ -58,6 +70,7 @@ const formItem: Form.FieldItem[] = reactive([
 	{
 		prop: "roleDesc",
 		label: "角色描述",
+		enterable: true,
 		placeholder: "请输入角色描述",
 		rules: [{ required: true, message: "请输入角色描述", trigger: "blur" }]
 	},
@@ -74,6 +87,7 @@ const formItem: Form.FieldItem[] = reactive([
 			multiple: true,
 			checkStrictly: false,
 			showCheckbox: true,
+			collapseTags: true,
 			data: menuList.value
 		}
 	}
@@ -90,11 +104,9 @@ const proForm = ref();
 const handleSubmit = async (val: Menu.MenuOptions) => {
 	if (!val) return;
 	try {
-		console.log(val);
 		await drawerProps.value.api!(val);
-		ElMessage.success({ message: `${drawerProps.value.title}权限成功！` });
-		// 更新 authStore 数据
-		authStore.getAuthMenuList(false);
+		ElMessage.success({ message: `${drawerProps.value.title}角色成功！` });
+		drawerProps.value.getTableList!();
 		drawerVisible.value = false;
 	} catch (error) {
 		console.log(error);

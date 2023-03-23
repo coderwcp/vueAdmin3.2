@@ -1,6 +1,6 @@
 <template>
 	<div class="height-ratio100">
-		<ProTable ref="proTable" :request-api="getRoleLIist" :columns="columns">
+		<ProTable ref="proTable" :request-api="getRoleList" :columns="columns">
 			<template #customLeftButton>
 				<el-button type="primary" @click="openDarwer('新增')">添加角色</el-button>
 			</template>
@@ -14,18 +14,8 @@ import ProTable from "@/components/ProTable/index.vue";
 import { Edit } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import RoleDrawer from "../components/roleDrawer.vue";
-const getRoleLIist = () => {
-	return new Promise(resolve => {
-		resolve({
-			data: {
-				datalist: [],
-				pageNum: 1,
-				pageSize: 10,
-				total: 10
-			}
-		});
-	});
-};
+import { addRoleApi, editRoleApi, getRoleList } from "@/api/system/index";
+import { Role } from "@/api/interface";
 
 const columns = [
 	{
@@ -61,15 +51,17 @@ const drawerRef = ref();
 const proTable = ref();
 const openDarwer = (
 	title: string,
-	rowData: any = {
+	rowData: Role = {
 		roleName: "",
 		roleDesc: "",
-		authIds: []
+		authIds: ""
 	}
 ) => {
 	const params = {
 		title,
-		rowData
+		rowData: { ...rowData, authIds: rowData.authIds && (rowData.authIds as string).split(",").map(v => Number(v)) },
+		api: title === "新增" ? addRoleApi : title === "编辑" ? editRoleApi : "",
+		getTableList: proTable.value.getTableList
 	};
 	drawerRef.value.acceptParams(params);
 };
