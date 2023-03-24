@@ -38,12 +38,16 @@ export namespace Login {
 		user_info: UserInfo;
 	}
 	export interface UserInfo {
+		id?: number;
 		username: string;
 		nickname: string;
 		email: string;
 		avatar: string | null;
+		role: number;
 	}
 }
+
+export type UserInfo = Login.UserInfo;
 
 // * 会员管理模块
 export namespace User {

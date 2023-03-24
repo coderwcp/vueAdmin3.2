@@ -1,5 +1,5 @@
 import request from "@/api";
-import { ResPage, Result, Role } from "../interface";
+import { ReqPage, ResPage, Result, Role, UserInfo } from "../interface";
 /**
  * @name 用户管理模块
  */
@@ -25,8 +25,8 @@ export const getMenuListApi = (noLoading?: boolean) => {
 };
 
 // * 角色列表
-export const getRoleList = (params: ResPage<Role>) => {
-	return request.get("/system/role", params, { headers: { noLoading: false } });
+export const getRoleList = (params: ReqPage) => {
+	return request.get<ResPage<Role>>("/system/role", params, { headers: { noLoading: false } });
 };
 
 // * 添加角色
@@ -42,4 +42,9 @@ export const editRoleApi = (params: ResPage<Role>) => {
 // * 删除角色
 export const delRoleApi = (params: { id: number }) => {
 	return request.delete<Result>("/system/role", params);
+};
+
+// * 后台管理员列表
+export const getBgAdminList = (params: ResPage<UserInfo>) => {
+	return request.get<Result>("/system/bgAdmin", params);
 };
