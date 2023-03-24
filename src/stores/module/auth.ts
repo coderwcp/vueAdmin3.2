@@ -13,8 +13,8 @@ export const AuthStore = defineStore({
 	},
 	actions: {
 		// getAuthMenuList
-		async getAuthMenuList(roleId: number = 0, noLoading: boolean) {
-			const { data } = await getAuthListApi({ roleId }, noLoading);
+		async getAuthMenuList(roleId: number = 0) {
+			const { data } = await getAuthListApi({ roleId });
 			this.authMenuList = data as Menu.MenuOptions[];
 		},
 		// setRouteName

@@ -88,7 +88,8 @@ const delAuthHandle = async (row: Menu.MenuOptions) => {
 	try {
 		const { msg } = await delAuthApi({ id: row.id as number });
 		ElMessage.success({ message: msg });
-		authStore.getAuthMenuList(0, false);
+		proTable.value.getTableList();
+		authStore.getAuthMenuList();
 	} catch (error) {}
 };
 

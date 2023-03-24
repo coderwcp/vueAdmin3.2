@@ -10,7 +10,7 @@ export const initDynamicRouter = async (roleId: number) => {
 	const globalStore = GlobalStore();
 	const authStore = AuthStore();
 	try {
-		await authStore.getAuthMenuList(roleId, true);
+		await authStore.getAuthMenuList(roleId);
 		if (!authStore.authMenuList.length) {
 			ElNotification({
 				title: "无权限访问",

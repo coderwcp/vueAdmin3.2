@@ -23,8 +23,8 @@ export const delAuthApi = (params: { id: number }) => {
 /**
  * @params 角色ID
  */
-export const getAuthListApi = (params: { roleId: number }, noLoading?: boolean) => {
-	return request.get<Menu.MenuOptions[]>("/system/auth", params, { headers: { noLoading: noLoading || false } });
+export const getAuthListApi = (params: { roleId: number }) => {
+	return request.get<Menu.MenuOptions[]>("/system/auth", params);
 };
 
 // * 角色列表
