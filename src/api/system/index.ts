@@ -26,15 +26,15 @@ export const getMenuListApi = (noLoading?: boolean) => {
 
 // * 角色列表
 export const getRoleList = (params: ResPage<Role>) => {
-	return request.get("/system/role", params);
+	return request.get("/system/role", params, { headers: { noLoading: false } });
 };
 
-// * 角色列表
+// * 添加角色
 export const addRoleApi = (params: ResPage<Role>) => {
 	return request.post<Result>("/system/role", params);
 };
 
-// * 角色列表
+// * 修改角色
 export const editRoleApi = (params: ResPage<Role>) => {
 	return request.put<Result>("/system/role", params);
 };
