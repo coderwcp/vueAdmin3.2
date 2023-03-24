@@ -44,13 +44,18 @@ const drawerProps = ref<DrawerProps>({
 // 处理表单数据回调函数
 const dataCallback = (value: any) => {
 	const flatMenuList = getFlatMenuList(menuList.value);
-	console.log(flatMenuList);
 	if (!Array.isArray(drawerProps.value.rowData?.authIds)) return value;
 	const ids = drawerProps.value.rowData?.authIds as number[];
 	flatMenuList.forEach(item => {
 		if (item.children) {
-			!item.children.map(v => v.id).every(v => (ids as number[]).find(t => t == v)) &&
+			item.children.map(v => v.id).find(v => ids.includes(v as number));
+			if (item.children.map(v => v.id).find(v => ids.includes(v as number))) {
 				(drawerProps.value.rowData?.authIds as number[]).push(item.id as number);
+			} else {
+				(drawerProps.value.rowData?.authIds as number[]).forEach((v, i) => {
+					v === item.id && (drawerProps.value.rowData?.authIds as number[]).splice(i, 1);
+				});
+			}
 		}
 	});
 	console.log(value);

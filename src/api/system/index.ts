@@ -38,3 +38,8 @@ export const addRoleApi = (params: ResPage<Role>) => {
 export const editRoleApi = (params: ResPage<Role>) => {
 	return request.put<Result>("/system/role", params);
 };
+
+// * 删除角色
+export const delRoleApi = (params: { id: number }) => {
+	return request.delete<Result>("/system/role", params);
+};

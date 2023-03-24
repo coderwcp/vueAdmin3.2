@@ -65,6 +65,7 @@ export namespace User {
 
 // * 角色
 export interface Role {
+	id?: number;
 	roleName: string;
 	roleDesc: string;
 	authIds: number[] | string;
