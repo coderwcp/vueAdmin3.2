@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="tsx" name="MenuDrawer">
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import ProForm from "@/components/ProForm/index.vue";
 import SelectIcon from "@/components/SelectIcon/index.vue";
 import { Form } from "@/components/ProForm/interface";
@@ -31,7 +31,7 @@ interface DrawerProps {
 	getTableList?: () => Promise<any>;
 }
 const authStore = AuthStore();
-const menuList = computed(() => authStore.showMenuListGet);
+let menuList = computed(() => authStore.showMenuListGet);
 // drawer框状态
 const drawerVisible = ref(false);
 const drawerProps = ref<DrawerProps>({
@@ -66,7 +66,7 @@ const dataCallback = (value: Menu.MenuOptions) => {
 	return tempObj;
 };
 // 表单项
-const formItem: Form.FieldItem[] = reactive([
+let formItem: Form.FieldItem[] = reactive([
 	{
 		prop: ["meta", "title"],
 		label: "名称",
@@ -112,16 +112,17 @@ const formItem: Form.FieldItem[] = reactive([
 		options: {
 			nodeKey: "id",
 			showCheckbox: true,
+			checkStrictly: true,
 			props: {
 				label(data: Menu.MenuOptions) {
 					return data.meta.title;
 				},
 				disabled(data: Menu.MenuOptions) {
-					return !data.isMenu;
+					return !data.isMenu || drawerProps.value.rowData?.name === data.name;
 				},
 				children: "children"
 			},
-			data: [{ id: 0, isMenu: false, meta: { title: "默认" } }, ...menuList.value]
+			data: [{ id: 0, isMenu: true, meta: { title: "默认" } }, ...menuList.value]
 		}
 	},
 	{
@@ -220,6 +221,24 @@ const formItem: Form.FieldItem[] = reactive([
 		}
 	}
 ]);
+// 更新弹窗中的权限列表
+watch(
+	() => drawerVisible,
+	val => {
+		if (val) {
+			formItem = formItem.map(v => {
+				return {
+					...v,
+					options:
+						v.type === "treeselect"
+							? { ...v.options, data: [{ id: 0, isMenu: true, meta: { title: "默认" } }, ...menuList.value] }
+							: v.options
+				};
+			});
+		}
+	},
+	{ deep: true }
+);
 
 const changeIcon = (val: string) => {
 	drawerProps.value.rowData!.meta.icon = val;

@@ -15,9 +15,10 @@ import { AuthStore } from "@/stores/module/auth";
 import { h, resolveComponent, computed, ref } from "vue";
 import ProTable from "@/components/ProTable/index.vue";
 import MenuDrawer from "../components/menuDrawer.vue";
-import { Edit } from "@element-plus/icons-vue";
+import { Delete, Edit } from "@element-plus/icons-vue";
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serviceLoading";
-import { addAuthApi, editAuthApi } from "@/api/system";
+import { addAuthApi, delAuthApi, editAuthApi } from "@/api/system";
+import { ElMessage } from "element-plus";
 
 const authStore = AuthStore();
 
@@ -71,17 +72,34 @@ const columns: ColumnProps<Menu.MenuOptions>[] = [
 		label: "操作",
 		render({ row }) {
 			return (
-				<el-button
-					type="primary"
-					style={{ fontSize: "20px" }}
-					link={true}
-					icon={Edit}
-					onClick={() => openDarwer("编辑", row)}
-				></el-button>
+				<>
+					<el-button
+						type="primary"
+						style={{ fontSize: "20px" }}
+						link={true}
+						icon={Edit}
+						onClick={() => openDarwer("编辑", row)}
+					></el-button>
+					<el-popconfirm onConfirm={() => delAuthHandle(row)} width={200} title="是否确认删除当前权限？">
+						{{
+							reference() {
+								return <el-button type="danger" style={{ fontSize: "20px" }} link={true} icon={Delete}></el-button>;
+							}
+						}}
+					</el-popconfirm>
+				</>
 			);
 		}
 	}
 ];
+
+const delAuthHandle = async (row: Menu.MenuOptions) => {
+	try {
+		const { msg } = await delAuthApi({ id: row.id as number });
+		ElMessage.success({ message: msg });
+		authStore.getAuthMenuList(false);
+	} catch (error) {}
+};
 
 // 抽屉开关
 const drawerRef = ref();
@@ -94,7 +112,7 @@ const openDarwer = (
 		parentId: 0,
 		component: "",
 		redirect: "",
-		isMenu: true,
+		isMenu: false,
 		meta: {
 			icon: "",
 			title: "",

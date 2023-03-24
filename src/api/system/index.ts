@@ -14,6 +14,11 @@ export const editAuthApi = (params: Menu.MenuOptions) => {
 	return request.put<Result>("/system/auth", params);
 };
 
+// * 删除权限
+export const delAuthApi = (params: { id: number }) => {
+	return request.delete<Result>("/system/auth", params);
+};
+
 // * 权限列表
 export const getMenuListApi = (noLoading?: boolean) => {
 	return request.get<Menu.MenuOptions[]>("/system/auth", {}, { headers: { noLoading: noLoading || false } });
