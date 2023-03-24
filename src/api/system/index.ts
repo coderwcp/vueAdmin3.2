@@ -20,8 +20,11 @@ export const delAuthApi = (params: { id: number }) => {
 };
 
 // * 权限列表
-export const getMenuListApi = (noLoading?: boolean) => {
-	return request.get<Menu.MenuOptions[]>("/system/auth", {}, { headers: { noLoading: noLoading || false } });
+/**
+ * @params 角色ID
+ */
+export const getAuthListApi = (params: { roleId: number }, noLoading?: boolean) => {
+	return request.get<Menu.MenuOptions[]>("/system/auth", params, { headers: { noLoading: noLoading || false } });
 };
 
 // * 角色列表

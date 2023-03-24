@@ -35,7 +35,7 @@ const columns = reactive<ColumnProps<UserInfo>[]>([
 		prop: "role",
 		label: "成员角色",
 		render({ row }) {
-			return roleList.data.datalist.find(v => v.id === row.role)?.roleName || "";
+			return roleList.data.datalist.find(v => v.id === row.roleId)?.roleName || "";
 		}
 	},
 	{

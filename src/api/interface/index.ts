@@ -43,7 +43,7 @@ export namespace Login {
 		nickname: string;
 		email: string;
 		avatar: string | null;
-		role: number;
+		roleId: number;
 	}
 }
 

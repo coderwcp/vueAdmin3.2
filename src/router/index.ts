@@ -33,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
 	// 如果没有菜单列表，就重新请求菜单列表并添加动态路由
 	const authStore = AuthStore();
 	if (!authStore.authMenuList.length) {
-		await initDynamicRouter();
+		await initDynamicRouter(globalStore.userInfo.roleId);
 		return next({ ...to, replace: true });
 	}
 	// 正常访问

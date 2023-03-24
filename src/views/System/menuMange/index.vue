@@ -1,6 +1,6 @@
 <template>
 	<div class="height-ratio100">
-		<ProTable ref="proTable" :request-api="getMenuList" :columns="columns" :pagination="false">
+		<ProTable ref="proTable" :request-api="getAuthListApi" :init-param="{ roleId: 0 }" :columns="columns" :pagination="false">
 			<template #customLeftButton>
 				<el-button type="primary" @click="openDarwer('新增')">添加权限</el-button>
 			</template>
@@ -12,27 +12,18 @@
 <script setup lang="tsx" name="menuMange">
 import { ColumnProps } from "@/components/ProTable/interface";
 import { AuthStore } from "@/stores/module/auth";
-import { h, resolveComponent, computed, ref } from "vue";
+import { h, resolveComponent, ref } from "vue";
 import ProTable from "@/components/ProTable/index.vue";
 import MenuDrawer from "../components/menuDrawer.vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
-import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serviceLoading";
-import { addAuthApi, delAuthApi, editAuthApi } from "@/api/system";
+import { addAuthApi, delAuthApi, editAuthApi, getAuthListApi } from "@/api/system";
 import { ElMessage } from "element-plus";
 
 const authStore = AuthStore();
 
-// 权限列表
-const menuList = computed(() => authStore.showMenuListGet);
-const getMenuList = () => {
-	showFullScreenLoading();
-	return new Promise((resolve, reject) => {
-		tryHideFullScreenLoading();
-		if (menuList.value) {
-			resolve({ data: menuList });
-		} else reject(null);
-	});
-};
+// 所有权限列表
+const { data: menuList } = await getAuthListApi({ roleId: 0 }, false);
+
 // 表格列配置
 const columns: ColumnProps<Menu.MenuOptions>[] = [
 	{
@@ -97,7 +88,7 @@ const delAuthHandle = async (row: Menu.MenuOptions) => {
 	try {
 		const { msg } = await delAuthApi({ id: row.id as number });
 		ElMessage.success({ message: msg });
-		authStore.getAuthMenuList(false);
+		authStore.getAuthMenuList(0, false);
 	} catch (error) {}
 };
 

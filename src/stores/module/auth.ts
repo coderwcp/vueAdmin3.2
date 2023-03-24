@@ -1,4 +1,4 @@
-import { getMenuListApi } from "@/api/system";
+import { getAuthListApi } from "@/api/system";
 import { getAllBreadcrumbList, getFlatMenuList, getShowMenuList } from "@/utils";
 import { defineStore } from "pinia";
 import { AuthState } from "../interface";
@@ -13,8 +13,8 @@ export const AuthStore = defineStore({
 	},
 	actions: {
 		// getAuthMenuList
-		async getAuthMenuList(noLoading: boolean) {
-			const { data } = await getMenuListApi(noLoading);
+		async getAuthMenuList(roleId: number = 0, noLoading: boolean) {
+			const { data } = await getAuthListApi({ roleId }, noLoading);
 			this.authMenuList = data as Menu.MenuOptions[];
 		},
 		// setRouteName

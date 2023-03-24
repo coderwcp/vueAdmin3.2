@@ -63,7 +63,7 @@ const login = (fromEl: FormInstance | undefined) => {
 			globalStore.setToken(access_token);
 			globalStore.setUserInfo(user_info);
 
-			await initDynamicRouter();
+			await initDynamicRouter(user_info.roleId);
 
 			router.push("/Home");
 

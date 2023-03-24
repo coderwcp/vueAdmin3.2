@@ -19,7 +19,7 @@ export const GlobalStore = defineStore({
 			nickname: "",
 			email: "",
 			avatar: "",
-			role: 0
+			roleId: 0
 		},
 		language: "",
 		themeConfig: {
@@ -61,7 +61,7 @@ export const GlobalStore = defineStore({
 				nickname: "",
 				email: "",
 				avatar: "",
-				role: 0
+				roleId: 0
 			};
 		},
 		updateLanguage(language: string) {
