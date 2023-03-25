@@ -23,6 +23,12 @@
 					:props="item.options?.props ?? { label: 'label', children: 'children' }"
 					:node-key="item.options?.nodeKey ?? 'id'"
 				/>
+				<!-- 选择器 -->
+				<el-select v-else-if="item.type === 'select'" v-model="item.prop" :placeholder="item.placeholder">
+					<el-option v-for="(opt, optIdx) in item.options?.data" :key="optIdx" :value="opt[item.options?.valueKey ?? 'value']">{{
+						opt[item.options?.labelkey ?? "label"]
+					}}</el-option>
+				</el-select>
 				<!-- 多选框 -->
 				<el-checkbox-group v-else-if="item.type === 'checkbox'" v-model="model[item.prop]">
 					<el-checkbox

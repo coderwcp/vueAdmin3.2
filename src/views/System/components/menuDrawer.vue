@@ -258,7 +258,7 @@ const handleSubmit = async (val: Menu.MenuOptions) => {
 		await drawerProps.value.api!(val);
 		ElMessage.success({ message: `${drawerProps.value.title}权限成功！` });
 		// 更新 authStore 数据
-		authStore.getAuthMenuList(0, false);
+		authStore.getAuthMenuList(0);
 		drawerVisible.value = false;
 	} catch (error) {
 		console.log(error);

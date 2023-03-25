@@ -40,9 +40,9 @@ export namespace Login {
 	export interface UserInfo {
 		id?: number;
 		username: string;
-		nickname: string;
-		email: string;
-		avatar: string | null;
+		nickname?: string;
+		email?: string;
+		avatar?: string | null;
 		roleId: number;
 	}
 }

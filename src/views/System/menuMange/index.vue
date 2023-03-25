@@ -22,7 +22,7 @@ import { ElMessage } from "element-plus";
 const authStore = AuthStore();
 
 // 所有权限列表
-const { data: menuList } = await getAuthListApi({ roleId: 0 }, false);
+const { data: menuList } = await getAuthListApi({ roleId: 0 });
 
 // 表格列配置
 const columns: ColumnProps<Menu.MenuOptions>[] = [
